@@ -92,3 +92,6 @@ prism_plugin:
   mode: 'preprocess'    # realtime/preprocess 
   theme: 'okaidia'
   line_number: true    # default false 
+
+encrypt:
+  enable: true
