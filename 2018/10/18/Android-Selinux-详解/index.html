@@ -1,0 +1,1788 @@
+<!DOCTYPE html>
+
+
+
+  
+
+
+<html class="theme-next pisces use-motion" lang="zh-Hans">
+<head>
+  <meta charset="UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+<meta name="theme-color" content="#222">
+
+
+
+
+
+
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  <link href="/lib/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css" />
+
+
+
+
+  
+  
+  
+  
+
+  
+    
+    
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+    
+    
+    <link href="//fonts.googleapis.com/css?family=Lato:300,300italic,400,400italic,700,700italic&subset=latin,latin-ext" rel="stylesheet" type="text/css">
+  
+
+
+
+
+
+
+<link href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css" />
+
+<link href="/css/main.css?v=5.1.4" rel="stylesheet" type="text/css" />
+
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png?v=5.1.4">
+
+
+  <link rel="icon" type="image/png" sizes="32x32" href="/favicon.ico?v=5.1.4">
+
+
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png?v=5.1.4">
+
+
+  <link rel="mask-icon" href="/images/safari-pinned-tab.svg?v=5.1.4" color="#222">
+
+
+  <link rel="manifest" href="/images/manifest.json">
+
+
+  <meta name="msapplication-config" content="/images/browserconfig.xml" />
+
+
+
+  <meta name="keywords" content="Android,selinux," />
+
+
+
+
+
+
+
+
+
+
+<meta name="description" content="版本控制：    作者 更新内容 更新时间     董在强 第一次编写 2017-08-11    0.简介 SELINUX是可以理解为一种android上面的安全机制，是有美国国家安全局和一些公司设计的一个针对linux的安全加强系统我们可以通过配置SELINUX的相关policy，来定制自己的手机的一些权限。它比原有linux 权限机制更加严格。 1.现有权限介绍现有的权限:自主式访问控制,">
+<meta name="keywords" content="Android,selinux">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Android-Selinux-详解">
+<meta property="og:url" content="https://lilujie.github.io/2018/10/18/Android-Selinux-详解/index.html">
+<meta property="og:site_name" content="打不死的小强">
+<meta property="og:description" content="版本控制：    作者 更新内容 更新时间     董在强 第一次编写 2017-08-11    0.简介 SELINUX是可以理解为一种android上面的安全机制，是有美国国家安全局和一些公司设计的一个针对linux的安全加强系统我们可以通过配置SELINUX的相关policy，来定制自己的手机的一些权限。它比原有linux 权限机制更加严格。 1.现有权限介绍现有的权限:自主式访问控制,">
+<meta property="og:locale" content="zh-Hans">
+<meta property="og:image" content="https://lilujie.github.io/2018/10/18/Android-Selinux-详解/selinux1.png">
+<meta property="og:image" content="https://lilujie.github.io/2018/10/18/Android-Selinux-详解/selinux2.png">
+<meta property="og:updated_time" content="2018-10-22T02:56:56.888Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="Android-Selinux-详解">
+<meta name="twitter:description" content="版本控制：    作者 更新内容 更新时间     董在强 第一次编写 2017-08-11    0.简介 SELINUX是可以理解为一种android上面的安全机制，是有美国国家安全局和一些公司设计的一个针对linux的安全加强系统我们可以通过配置SELINUX的相关policy，来定制自己的手机的一些权限。它比原有linux 权限机制更加严格。 1.现有权限介绍现有的权限:自主式访问控制,">
+<meta name="twitter:image" content="https://lilujie.github.io/2018/10/18/Android-Selinux-详解/selinux1.png">
+
+
+
+<script type="text/javascript" id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Pisces',
+    version: '5.1.4',
+    sidebar: {"position":"left","display":"post","offset":12,"b2t":false,"scrollpercent":true,"onmobile":false},
+    fancybox: true,
+    tabs: true,
+    motion: {"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},
+    duoshuo: {
+      userId: '0',
+      author: '博主'
+    },
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+
+  <link rel="canonical" href="https://lilujie.github.io/2018/10/18/Android-Selinux-详解/"/>
+
+
+
+
+
+  <title>Android-Selinux-详解 | 打不死的小强</title>
+  
+
+
+
+
+
+
+
+
+<link rel="stylesheet" href="/css/prism-okaidia.css" type="text/css">
+<link rel="stylesheet" href="/css/prism-line-numbers.css" type="text/css"></head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
+
+  
+  
+    
+  
+
+  <div class="container sidebar-position-left page-post-detail">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-wrapper">
+  <div class="site-meta ">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/"  class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">打不死的小强</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+      
+        <p class="site-subtitle">博观而约取，厚积而薄发</p>
+      
+  </div>
+
+  <div class="site-nav-toggle">
+    <button>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br />
+            
+            首页
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-about">
+          <a href="/about/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-user"></i> <br />
+            
+            关于
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/tags/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-tags"></i> <br />
+            
+            标签
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-categories">
+          <a href="/categories/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-th"></i> <br />
+            
+            分类
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br />
+            
+            归档
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-书籍">
+          <a href="/books/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-book"></i> <br />
+            
+            书籍
+          </a>
+        </li>
+      
+
+      
+        <li class="menu-item menu-item-search">
+          
+            <a href="javascript:;" class="popup-trigger">
+          
+            
+              <i class="menu-item-icon fa fa-search fa-fw"></i> <br />
+            
+            搜索
+          </a>
+        </li>
+      
+    </ul>
+  
+
+  
+    <div class="site-search">
+      
+  <div class="popup search-popup local-search-popup">
+  <div class="local-search-header clearfix">
+    <span class="search-icon">
+      <i class="fa fa-search"></i>
+    </span>
+    <span class="popup-btn-close">
+      <i class="fa fa-times-circle"></i>
+    </span>
+    <div class="local-search-input-wrapper">
+      <input autocomplete="off"
+             placeholder="搜索..." spellcheck="false"
+             type="text" id="local-search-input">
+    </div>
+  </div>
+  <div id="local-search-result"></div>
+</div>
+
+
+
+    </div>
+  
+</nav>
+
+
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="https://lilujie.github.io/2018/10/18/Android-Selinux-详解/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="Ryan Tung">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/avatar.gif">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="打不死的小强">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">Android-Selinux-详解</h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2018-10-18T10:09:39+08:00">
+                2018-10-18
+              </time>
+            
+
+            
+              <span class="post-meta-divider">|</span>
+            
+
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-check-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">更新于&#58;</span>
+              
+              <time title="更新于" itemprop="dateModified" datetime="2018-10-22T10:56:56+08:00">
+                2018-10-22
+              </time>
+            
+          </span>
+
+          
+            <span class="post-category" >
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/selinux/" itemprop="url" rel="index">
+                    <span itemprop="name">selinux</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+          
+
+          
+          
+             <span id="/2018/10/18/Android-Selinux-详解/" class="leancloud_visitors" data-flag-title="Android-Selinux-详解">
+               <span class="post-meta-divider">|</span>
+               <span class="post-meta-item-icon">
+                 <i class="fa fa-eye"></i>
+               </span>
+               
+                 <span class="post-meta-item-text">阅读次数&#58;</span>
+               
+                 <span class="leancloud-visitors-count"></span>
+             </span>
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <p><strong>版本控制：</strong></p>
+<table>
+<thead>
+<tr>
+<th>作者</th>
+<th>更新内容</th>
+<th>更新时间</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>董在强</td>
+<td>第一次编写</td>
+<td>2017-08-11</td>
+</tr>
+</tbody>
+</table>
+<h2 id="0-简介"><a href="#0-简介" class="headerlink" title="0.简介"></a>0.简介</h2><p> <br><br>SELINUX是可以理解为一种android上面的安全机制，是有美国国家安全局和一些公司设计的一个针对linux的安全加强系统我们可以通过配置SELINUX的相关policy，来定制自己的手机的一些权限。它比原有linux 权限机制更加严格。<br></p>
+<h2 id="1-现有权限介绍"><a href="#1-现有权限介绍" class="headerlink" title="1.现有权限介绍"></a>1.现有权限介绍</h2><p>现有的权限:自主式访问控制, DAC<br><br>DAC 访问方式如下图所示：<br><br><img src="/2018/10/18/Android-Selinux-详解/selinux1.png" alt="自主式访问控制"></p>
+<p> 上面的这个上关系可以通过以下方法来测试：</p>
+<ol>
+<li>在一台linux机器建立两个普通账户。</li>
+<li>用root 权限打开/tmp/目录，新建立目录，并打开。</li>
+<li>用其中一个账户来编写如下的程序并通过ＧＣＣ编译</li>
+<li>用同一个账户来touch t.txt</li>
+<li>用同一个账户来执行编译出来的程序，发现可以正常执行</li>
+<li>用另个一个账户来执行相同的程序，发现可以执行但不能读写文件</li>
+</ol>
+<pre class="line-numbers language-c"><code class="language-c">
+ <span class="token macro property">#<span class="token directive keyword">include</span> ”stdio.h“</span>
+
+<span class="token keyword">void</span> <span class="token function">main</span><span class="token punctuation">(</span><span class="token keyword">void</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
+    FILE <span class="token operator">*</span>fp<span class="token punctuation">;</span>
+    <span class="token keyword">char</span> ch<span class="token punctuation">;</span> 
+    <span class="token keyword">if</span> <span class="token punctuation">(</span><span class="token punctuation">(</span>fp <span class="token operator">=</span> <span class="token function">fopen</span><span class="token punctuation">(</span><span class="token string">"./t.txt"</span><span class="token punctuation">,</span><span class="token string">"rt+"</span><span class="token punctuation">)</span><span class="token punctuation">)</span> <span class="token operator">==</span> <span class="token constant">NULL</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
+        <span class="token function">printf</span><span class="token punctuation">(</span><span class="token string">"Cannot open file and Exit!"</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+        <span class="token function">exit</span><span class="token punctuation">(</span><span class="token number">1</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+    <span class="token punctuation">}</span>
+    <span class="token function">printf</span><span class="token punctuation">(</span><span class="token string">"input a string:\n"</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+    ch<span class="token operator">=</span><span class="token function">getchar</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+    <span class="token keyword">while</span> <span class="token punctuation">(</span>ch <span class="token operator">!=</span> <span class="token string">'*'</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
+        <span class="token function">fputc</span><span class="token punctuation">(</span>ch<span class="token punctuation">,</span>fp<span class="token punctuation">)</span><span class="token punctuation">;</span>
+        ch<span class="token operator">=</span><span class="token function">getchar</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+    <span class="token punctuation">}</span>
+    <span class="token function">rewind</span><span class="token punctuation">(</span>fp<span class="token punctuation">)</span><span class="token punctuation">;</span>
+    ch <span class="token operator">=</span> <span class="token function">fgetc</span><span class="token punctuation">(</span>fp<span class="token punctuation">)</span><span class="token punctuation">;</span>
+    <span class="token keyword">while</span> <span class="token punctuation">(</span>ch <span class="token operator">!=</span> <span class="token constant">EOF</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
+        <span class="token function">putchar</span><span class="token punctuation">(</span>ch<span class="token punctuation">)</span><span class="token punctuation">;</span>
+        ch <span class="token operator">=</span> <span class="token function">fgetc</span><span class="token punctuation">(</span>fp<span class="token punctuation">)</span><span class="token punctuation">;</span>
+    <span class="token punctuation">}</span>                    
+    <span class="token function">printf</span><span class="token punctuation">(</span><span class="token string">"The end and Close file!\n"</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+    <span class="token function">fclose</span><span class="token punctuation">(</span>fp<span class="token punctuation">)</span><span class="token punctuation">;</span>
+    <span class="token function">exit</span><span class="token punctuation">(</span><span class="token number">0</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+<span class="token punctuation">}</span>
+
+<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+<h2 id="2-现有权限存在的问题"><a href="#2-现有权限存在的问题" class="headerlink" title="2. 现有权限存在的问题"></a>2. 现有权限存在的问题</h2><p><br></p>
+<ul>
+<li>root 具有最高的权限:如果不小心某支程序被有心人士取得, 且该程序属于 root的权限,那么这支程序就可以在系统上进行任何资源的存取!<br><br></li>
+<li>用户可以取得程序来变更档案资源的访问权限:如果你不小心将某个目录的权限设定为777,由于对任何人的权限会变成rwx,因此该目录就会被任何人所任意存取!</li>
+</ul>
+<h2 id="3-SElinux权限控制"><a href="#3-SElinux权限控制" class="headerlink" title="3.SElinux权限控制"></a>3.SElinux权限控制</h2><p> <br><br>SElinux权限控制:委任式访问控制, MAC<br><br><strong>他可以针对特定的程序与特定的档案资源来进行权限的控管! 也就是说,即使你是root,那么在使用不同的程序时,你所能取得的权限并不一定是 root ,而得要看当时该程序的设定而定。如此一来,我们针对控制的『主体』变成了『程序』而不是用户.此外,这个主体程序也不能任意使用系统档案资源,因为每个档案资源也有针对该主体程序设定可取用的权限.</strong> <br><br>如此一来,控件目就细的多了!但整个系统程序那么多、档案那么多,一项一项控制可就没完没了! 所以SELinux 也提供一些预设的政策 (Policy) ,并在该政策内提供多个规则(rule),让你可以选择是否启用该控制规则!</p>
+<h2 id="4-SELinux-的运作模式"><a href="#4-SELinux-的运作模式" class="headerlink" title="4.SELinux 的运作模式"></a>4.SELinux 的运作模式</h2><p> <br></p>
+<p>再次的重复说明一下,SELinux 是透过 MAC 的方式来控管程序,他控制的主体是程序, 而目标则是该<br>程序能否读取的『档案资源』!所以先来说明一下这些的相关性<br><br><strong>主体 (Subject):</strong><br>SELinux 主要想要管理的就是程序,因此你可以将『主体』跟process 划上等号; <br><br><strong>目标 (Object):</strong><br>主体程序能否存取的『目标资源』一般就是文件系统。因此这个目标项目可以等文件系统划上等<br>号;<br><br><strong>政策 (Policy):</strong><br>由于程序与档案数量庞大,因此 SELinux 会依据某些服务来制订基本的存取安全性政策。这些政<br>策内还会有详细的规则 (rule) 来指定不同的服务开放某些资源的存取与否。<br><br><strong>安全性本文 (security context):</strong><br>我们刚刚谈到了主体、目标与政策面,但是主体能不能存取目标除了政策指定之外,主体与目标<br>的安全性本文必须一致才能够顺利存取。 这个安全性本文 (security context) 有点类似文件系统<br>的 rwx 啦!安全性本文的内容与设定是非常重要的! 如果设定错误,你的某些服务(主体程序)就<br>无法存取文件系统(目标资源),当然就会一直出现『权限不符』的错误讯息了! <br><br>安全性本文存在于主体程序中与目标档案资源中。程序在内存内,所以安全性本文可以存入是没问题。那档案的安全性本文是记录在哪里呢?事实上,安全性本文是放置到档案的 inode 内的,因此主体程序想要读取目标档案资源时,同样需要读取 inode , 这 inode 内就可以比对安全性本文以及 rwx 等权限值是否正确,而给予适当的读取权限依据。<br><br> 先看系统中的安全性文本：<br><br> 1.先看文件的安全性文本</p>
+<pre><code>shell@msm8226:/ # ls -Z
+drwxr-xr-x root     root              u:object_r:cgroup:s0 acct
+drwxrwx--- system   cache             u:object_r:cache_file:s0 cache
+lrwxrwxrwx root     root              u:object_r:rootfs:s0 charger -&gt; /sbin/healthd
+dr-x------ root     root              u:object_r:rootfs:s0 config
+lrwxrwxrwx root     root              u:object_r:rootfs:s0 d -&gt; /sys/kernel/debug
+drwxrwx--x system   system            u:object_r:system_data_file:s0 data
+-rw-r--r-- root     root              u:object_r:rootfs:s0 default.prop
+drwxr-xr-x root     root              u:object_r:device:s0 dev
+lrwxrwxrwx root     root              u:object_r:rootfs:s0 etc -&gt; /system/etc
+-rw-r--r-- root     root              u:object_r:rootfs:s0 file_contexts
+dr-xr-x--- system   system            u:object_r:firmware_file:s0 firmware
+-rw-r----- root     root              u:object_r:rootfs:s0 fstab.qcom
+
+
+</code></pre><p>2.再看一下进程的安全性文本：</p>
+<pre><code>u:r:init:s0                    root      1     0     /init
+u:r:kernel:s0                  root      2     0     kthreadd
+u:r:kernel:s0                  root      3     2     ksoftirqd/0
+u:r:kernel:s0                  root      6     2     kworker/u:0
+u:r:kernel:s0                  root      7     2     kworker/u:0H
+u:r:kernel:s0                  root      8     2     migration/0
+u:r:kernel:s0                  root      9     2     watchdog/0
+u:r:kernel:s0                  root      25    2     khelper
+u:r:kernel:s0                  root      26    2     netns
+u:r:kernel:s0                  root      31    2     kworker/0:1H
+u:r:kernel:s0                  root      32    2     modem_notifier
+u:r:kernel:s0                  root      33    2     smd_channel_clo
+u:r:kernel:s0                  root      34    2     smsm_cb_wq
+u:r:kernel:s0                  root      36    2     rpm-smd
+u:r:kernel:s0                  root      37    2     kworker/u:1H
+u:r:kernel:s0                  root      44    2     irq/47-cpr
+u:r:kernel:s0                  root      45    2     mpm
+
+</code></pre><p>如上所示,安全性本文主要用冒号分为三个字段,这三个字段的意义为:<br><br><strong>Identify:Role:Type[:Range]</strong><br><strong>身份识别:角色:类型</strong><br><br>这三个字段的意义仔细的说明一下吧:<br><br><strong>身份识别 (Identify):</strong><br>相当于账号方面的身份识别!主要的身份识别则有底下三种常见的类型:</p>
+<ul>
+<li>root:表示 root 的账号身份,如同上面的表格显示的是 root 家目录下的数据啊! </li>
+<li>system_u:表示系统程序方面的识别,通常就是程序啰; </li>
+<li>user_u:代表的是一般使用者账号相关的身份。</li>
+</ul>
+<p>你会发现身份识别中,除了 root 之外,其他的识别后面都会加上『 _u 』的字样呢! 这个身份识别重点再让我们了解该数据为何种身份所有哩~ 而系统上面大部分的数据都会是 system_u 或root 啦!至于如果是在 /home 底下的数据,那么大部分应该就会是 user_u .<br><br><strong>角色 (Role):</strong><br>透过角色字段,我们可以知道这个数据是属于程序、档案资源还是代表使用者。一般的角色有:</p>
+<ul>
+<li>object_r:代表的是档案或目录等档案资源,这应该是最常见的啰;</li>
+<li>system_r:代表的就是程序啦!不过,一般使用者也会被指定成为 system_r 喔!</li>
+</ul>
+<p>你也会发现角色的字段最后面使用『 _r 』来结尾!因为是 role 的意思嘛!<br><br><strong>类型 (Type) :(最重要!)</strong><br> 基本上,一个主体程序能不能读取到这个档案资源,与类型字段有关!而类型字段<br>在档案与程序的定义不太相同,分别是:</p>
+<ul>
+<li>type:在档案资源 (Object) 上面称为类型 (Type);</li>
+<li>domain:在主体程序 (Subject) 则称为领域 (domain) 了!</li>
+</ul>
+<p>domain 需要与 type 搭配,则该程序才能够顺利的读取档案资源啦!<br><br><strong>级别(Range):</strong><br><br>级别和SELinux为了满足军用和教育行业而设计的Multi-Level Security（MLS）机制有关。但是在Android中，因为只使用了S0所以这里不作更多的介绍。<br><br><strong>之间的关系如下图所示：</strong><br><br><img src="/2018/10/18/Android-Selinux-详解/selinux2.png" alt="关系"></p>
+<h2 id="5-SElinxu为什么可以解决DAC的问题？"><a href="#5-SElinxu为什么可以解决DAC的问题？" class="headerlink" title="5.SElinxu为什么可以解决DAC的问题？"></a>5.SElinxu为什么可以解决DAC的问题？</h2><p><br><br> <strong>先说一下，加入SElinux之后的访问是什么样的？</strong><br><br> 加入SElinux之后，DAC的访问方式没有废弃，而是DAC和MAC 两者合作达成一个更加安全的访问控制。一般是先进行DAC的检查，然后再进行MAC的检查，两者都通过才可以访问。<br><br>  <strong>SElinux 是怎么解决DAC的安全问题的？</strong><br><br><strong>DAC是基于用户的权限控制，也是说一个用户只要有读写这个文件的权限的，那么他就可以启动任何一个进程去读写这个文件，而MAC是基于域或者类型的访问控制，换句话说，它控制的对象不是用户，而是一个进程或者说是一个域（当然对于文件来说是类型），例如，以root启动一个程序, 如果是DAC 的时代，那这个上程序可以操作任何一个文件，但是MAC的时代，情况就一样了，就算是root要操作一个文件，也必需要符合相关政策 (Policy)的规定。所以说SElinux解决了ＤＡＣ的问题。</strong></p>
+<h2 id="6-Android中SElinux的体现"><a href="#6-Android中SElinux的体现" class="headerlink" title="6.Android中SElinux的体现"></a>6.Android中SElinux的体现</h2><h3 id="6-1-Android-中的安全性文本"><a href="#6-1-Android-中的安全性文本" class="headerlink" title="6.1 Android 中的安全性文本"></a>6.1 Android 中的安全性文本</h3><p><br>Android 中的安全性文本主要在这这个目录下：<code>external/sepolicy/</code><br> 这这个目录下执行<code>ls *_contexts</code>可以看到：</p>
+<pre><code>file_contexts  genfs_contexts  initial_sid_contexts  port_contexts  property_contexts  seapp_contexts  service_contexts
+</code></pre><p>这些文件都是Android 中的安全性文本。 <br><br><strong>注意：</strong><br>进程的安全性文本在那存放？<br>进程的安全性文本一般会由.rc的文件指定，在程序启动时候作为进程信息一部分存在，这样我们在执行ps -Ｚ时才能看到。<br><br>介绍一下各个文件的作用：</p>
+<ul>
+<li>file_contexts：主要是文件相关的</li>
+<li>seapp_contexts：主要是ＡＰＰ相关的</li>
+<li>property_contexts：主要是系统属性相关的</li>
+<li>initial_sid_contexts：主要是配合initial_sids（也在external/sepolicy）使用的，主要是用来初始化Object的安全性文本，在相关资料中这个动作称为Security Labeling</li>
+<li>port_contexts：主要是网络相关的</li>
+<li>service_contexts：主要系统服务相关的</li>
+<li>genfs_contexts：主要是一些特殊的文件相关<br><br><br><strong>以file_contexts为例，内容如下(实在是太长了，以下是部分)：</strong><br><br>可以对照安全性本文的介绍看一下。<br><br></li>
+</ul>
+<pre><code>###########################################
+# Root
+/            u:object_r:rootfs:s0
+
+# Data files
+/adb_keys        u:object_r:adb_keys_file:s0
+/default\.prop        u:object_r:rootfs:s0
+/fstab\..*        u:object_r:rootfs:s0
+/init\..*        u:object_r:rootfs:s0
+/res(/.*)?        u:object_r:rootfs:s0
+/ueventd\..*        u:object_r:rootfs:s0
+
+# Executables
+/charger        u:object_r:rootfs:s0
+/init            u:object_r:rootfs:s0
+/sbin(/.*)?        u:object_r:rootfs:s0
+
+# Empty directories
+/lost\+found        u:object_r:rootfs:s0
+/proc            u:object_r:rootfs:s0
+
+# SELinux policy files
+/file_contexts        u:object_r:rootfs:s0
+/property_contexts    u:object_r:rootfs:s0
+/seapp_contexts        u:object_r:rootfs:s0
+/sepolicy        u:object_r:rootfs:s0
+
+##########################
+# Devices
+#
+/dev(/.*)?        u:object_r:device:s0
+/dev/akm8973.*        u:object_r:sensors_device:s0
+/dev/accelerometer    u:object_r:sensors_device:s0
+/dev/adf[0-9]*        u:object_r:graphics_device:s0
+......
+/dev/tty        u:object_r:owntty_device:s0
+/dev/tty[0-9]*        u:object_r:tty_device:s0
+/dev/ttyS[0-9]*        u:object_r:serial_device:s0
+/dev/tun        u:object_r:tun_device:s0
+/dev/uhid        u:object_r:uhid_device:s0
+/dev/uinput        u:object_r:uhid_device:s0
+/dev/uio[0-9]*        u:object_r:uio_device:s0
+/dev/urandom        u:object_r:urandom_device:s0
+/dev/usb_accessory    u:object_r:usbaccessory_device:s0
+#############################
+# System files
+#
+/system(/.*)?        u:object_r:system_file:s0
+/system/bin/sh        --    u:object_r:shell_exec:s0
+/system/bin/run-as    --    u:object_r:runas_exec:s0
+/system/bin/bootanimation u:object_r:bootanim_exec:s0
+/system/bin/app_process32    u:object_r:zygote_exec:s0
+/system/bin/app_process64    u:object_r:zygote_exec:s0
+/system/bin/servicemanager    u:object_r:servicemanager_exec:s0
+/system/bin/surfaceflinger    u:object_r:surfaceflinger_exec:s0
+......
+/system/bin/uncrypt     u:object_r:uncrypt_exec:s0
+/system/bin/logwrapper  u:object_r:system_file:s0
+/system/bin/vdc         u:object_r:vdc_exec:s0
+/system/bin/install-recovery.sh u:object_r:install_recovery_exec:s0
+/system/bin/dex2oat     u:object_r:dex2oat_exec:s0
+# patchoat executable has (essentially) the same requirements as dex2oat.
+/system/bin/patchoat    u:object_r:dex2oat_exec:s0
+
+#############################
+# Vendor files
+#
+/vendor(/.*)?        u:object_r:system_file:s0
+/vendor/bin/gpsd    u:object_r:gpsd_exec:s0
+#############################
+# Data files
+#
+/data(/.*)?        u:object_r:system_data_file:s0
+/data/.layout_version        u:object_r:install_data_file:s0
+......
+/data/mediadrm(/.*)?    u:object_r:media_data_file:s0
+/data/property(/.*)?    u:object_r:property_data_file:s0
+
+# Misc data
+/data/misc/adb(/.*)?            u:object_r:adb_keys_file:s0
+/data/misc/audio(/.*)?          u:object_r:audio_data_file:s0
+/data/misc/bluetooth(/.*)?      u:object_r:bluetooth_data_file:s0
+/data/misc/bluedroid(/.*)?      u:object_r:bluetooth_data_file:s0
+/data/misc/bluedroid/\.a2dp_ctrl u:object_r:bluetooth_socket:s0
+......
+/data/misc/user(/.*)?           u:object_r:misc_user_data_file:s0
+/data/misc/vpn(/.*)?            u:object_r:vpn_data_file:s0
+/data/misc/wifi(/.*)?           u:object_r:wifi_data_file:s0
+/data/misc/wifi/sockets(/.*)?   u:object_r:wpa_socket:s0
+/data/misc/wifi/sockets/wpa_ctrl.*   u:object_r:system_wpa_socket:s0
+/data/misc/wifi/hostapd(/.*)?   u:object_r:wpa_socket:s0
+/data/misc/zoneinfo(/.*)?       u:object_r:zoneinfo_data_file:s0
+
+# coredump directory for userdebug/eng devices
+/cores(/.*)?                    u:object_r:coredump_file:s0
+
+# Wallpaper file for other users
+/data/system/users/[0-9]+/wallpaper        u:object_r:wallpaper_file:s0
+#############################
+# efs files
+#
+/efs(/.*)?        u:object_r:efs_file:s0
+#############################
+# Cache files
+#
+/cache(/.*)?        u:object_r:cache_file:s0
+/cache/.*\.data    u:object_r:cache_backup_file:s0
+/cache/.*\.restore    u:object_r:cache_backup_file:s0
+# LocalTransport (backup) uses this directory
+/cache/backup(/.*)?    u:object_r:cache_backup_file:s0
+#############################
+# sysfs files
+#
+/sys/devices/platform/nfc-power/nfc_power -- u:object_r:sysfs_nfc_power_writable:s0
+/sys/devices/system/cpu(/.*)?    u:object_r:sysfs_devices_system_cpu:s0
+/sys/power/wake_lock -- u:object_r:sysfs_wake_lock:s0
+/sys/power/wake_unlock -- u:object_r:sysfs_wake_lock:s0
+/sys/kernel/uevent_helper --    u:object_r:usermodehelper:s0
+/sys/module/lowmemorykiller(/.*)? -- u:object_r:sysfs_lowmemorykiller:s0
+
+#############################
+# asec containers
+/mnt/asec(/.*)?             u:object_r:asec_apk_file:s0
+/mnt/asec/[^/]+/[^/]+\.zip  u:object_r:asec_public_file:s0
+/mnt/asec/[^/]+/lib(/.*)?   u:object_r:asec_public_file:s0
+/data/app-asec(/.*)?        u:object_r:asec_image_file:s0
+
+</code></pre><h3 id="6-2-Android-中的政策"><a href="#6-2-Android-中的政策" class="headerlink" title="6.2 Android 中的政策"></a>6.2 Android 中的政策</h3><p>MAC基本管理单位是TEAC（Type Enforcement Accesc Control）,体现ＴＥＡＣ的东西正好就是我们这里将要介绍的政策。<br><br><strong>政策文件存在位置:</strong><code>external/sepolicy</code><br>在这里我们看到大量的.te文件，其实里面就是TEAC的各种配置。因为程序和文件实在是太多了，所以Android中配置都是基于域和类型来的。也就是在这些.te中你可能经常会看到像下的这句：<br><code>allow system_server i2c_device:chr_file { open read write ioctl};</code><br>上面的这句就是政策文件的一项配置，整个政策文件都是由这样的语句组成的。<br><br><strong>这样的语句的语法格式是：</strong><br><br><code>rule_name source_type target_type : class perm_set</code><br><br>分开的介绍：</p>
+<p><strong>rule_name:</strong> 主要是allow,allowaudit,dontaudit,neverallow<br> 这里没什么好说就是一种动作，允许或者never允许，其他两个因为很少去用，也没具体查是什么意思<br><br><strong>source_type:</strong>指程序或者是程序所属的域（domain）<br>在相关的.te文件中定义，如system_server这个domain在<code>system_server.te</code>中定义：</p>
+<pre><code>system_server.te:5:type system_server, domain, mlstrustedsubject;
+</code></pre><p><strong>target_type:</strong>指文件或者文件的类型<br>在相关的.te文件中定义。<br></p>
+<blockquote>
+<p>关于类型定义一会再详细介绍一下。</p>
+</blockquote>
+<p><br></p>
+<p><strong>class：</strong><code>这个比较复杂，一会重点介绍</code><br><strong>perm_set：</strong>在该类Object Class中所定义的操作。</p>
+<p><code>class</code>这个地方不好理解,其实不知道应该怎么去解释它，可能需要和perm_set结合起来去理解会好一点。下面详细说一下：</p>
+<p>1.cat <code>external/sepolicy/security_classes</code>可以看到如下信息：</p>
+<pre><code># Classes marked as userspace are classes
+# for userspace object managers
+
+class security
+class process
+class system
+class capability
+
+# file-related classes
+class filesystem
+class file
+class dir
+class fd
+class lnk_file
+class chr_file
+class blk_file
+class sock_file
+class fifo_file
+
+# network-related classes
+class socket
+class tcp_socket
+class udp_socket
+class rawip_socket
+class node
+class netif
+class netlink_socket
+class packet_socket
+class key_socket
+class unix_stream_socket
+class unix_dgram_socket
+
+</code></pre><p>根据SELinux规范，Object Class类型由class关键字申明<br><br>2.cat <code>external/sepolicy/access_vectors</code>可以看到如下信息：</p>
+<pre><code>#
+# Define a common prefix for file access vectors.
+#
+
+common file
+{
+    ioctl
+    read
+    write
+    create
+    getattr
+    setattr
+    lock
+    relabelfrom
+    relabelto
+    append
+    unlink
+    link
+    rename
+    execute
+    swapon
+    quotaon
+    mounton
+}
+
+
+#
+# Define a common prefix for socket access vectors.
+#
+
+common socket
+{
+# inherited from file
+    ioctl
+    read
+    write
+    create
+    getattr
+    setattr
+    lock
+    relabelfrom
+    relabelto
+    append
+# socket-specific
+    bind
+    connect
+    listen
+    accept
+    getopt
+    setopt
+    shutdown
+    recvfrom
+    sendto
+    recv_msg
+    send_msg
+    name_bind
+}
+
+
+</code></pre><p>SELinux规范中，定义perm set有两种方式:</p>
+<ol>
+<li>common common_name { permission_name … }<br>common定义的perm set能被另外一种perm set命令class所继承</li>
+<li>class class_name [ inherits common_name ] { permission_name … }<br>inherits表示继承了某个common定义的权限  注意，class命令定义的权限其实针对得就是某个object class。它不能被其他class继承</li>
+</ol>
+<p>下面用例子说明一下：</p>
+<pre><code>common file {
+      ioctl read write create getattr setattr lock relabelfrom relabelto
+      append unlink link rename execute swapon quotaon mounton }
+</code></pre><pre><code>class dir inherits file {
+   add_name  remove_name reparent search rmdir open audit_access execmod
+}
+</code></pre><h3 id="6-3-类型定义"><a href="#6-3-类型定义" class="headerlink" title="6.3 类型定义"></a>6.3 类型定义</h3><p> 类型定义通过type 来进行<br><br><strong>type命令的完整格式为：</strong><code>type type_id [alias alias_id,] [attribute_id]</code><br>其中，方括号中的内容为可选。alias指定了type的别名，可以指定多个别名。<br>下面这个例子定义了一个名为shell的type，它和一个名为domain的属性（attribute）关联 :<br><code>type shell, domain;</code></p>
+<p>属性由<code>attribute</code>关键字定义，如attributes文件中定义的SEAndroid使用的属性有：</p>
+<pre><code>attribute domain
+attribute file_type
+</code></pre><p>可以在定义type的时候，直接将其和某个attribute关联，也可以单独通过<code>typeattribue</code>将某个type和某个或多个attribute关联起来，如下面这个例子<br><br>将前面定义的system类型和mlstrustedsubject属性关联了起来<br><code>typeattribute system mlstrustedsubject</code><br><br><strong>这里需要重点说明一下<code>attribute</code>这个东西</strong><br>这里的<code>attribute</code>正确的意思不是属性，而是<strong><code>群组</code></strong>的意思。请注意！！！</p>
+<p><code>attribute</code>的作用通过如下的例子来说明：</p>
+<pre><code>#定义两个type，分别是A_t和B_t，它们都管理到attribute_test
+type A_t attribute_test;
+type B_t attribute_test;
+
+#写一个allow语句，直接针对attribute_test
+allow attribute_test C_t:file {read write};
+#上面这个allow语句在编译后的安全策略文件中会被如下两条语句替代：
+allow A_t C_t:file {read write};
+allow B_t C_t:file {read write};
+</code></pre><hr>
+<h2 id="7-如何快速添加一安全性规则"><a href="#7-如何快速添加一安全性规则" class="headerlink" title="7.如何快速添加一安全性规则"></a>7.如何快速添加一安全性规则</h2><ol>
+<li>首先确认你要解的问题的中是那个<code>进程</code>要访问那个<code>文件</code></li>
+<li>由于进程已经存在那个它安全性文本的定义肯定是存在只要找到就行类似这样一条语句<code>u:r:kernel:s0</code></li>
+<li>确认一下文件的安全性文本的定义是否存在，如果不存在则要定义（一般情况下是不存在）,3.1定义类型(参考6.3)3.2在contexts定义安全性文本（参考6.2）</li>
+<li>确认要进行那种操作也就是要确定class和perm_set.</li>
+<li>在相关的.te文件加入规则也就是一条allow相关的语句(参考6.2)。</li>
+</ol>
+<p>例子：<br>如我们在system_server中加入一个服务，这个服务要操作/dev/i2c-2这个设备结点。<br>那么安上面的方法：</p>
+<ol>
+<li>确认问题：<code>system_server</code>要访问<code>/dev/i2c-2</code></li>
+<li>确定进程<code>system_server</code>信息<code>u:r:system_server:s0           system    849   232   system_server</code></li>
+<li>由于<code>/dev/i2c-2</code>的安全性文本不存在，所以我们做定义3.1,<code>type i2c2_device, dev_type;</code>3.2,<code>/dev/i2c-2                                      u:object_r:i2c2_device:s0</code></li>
+<li>确认<code>calss　perm_set</code>为<code>chr_file　{open read write ioctl}</code></li>
+<li>加入规则<code>allow system_server i2c2_device:chr_file { open read write ioctl};</code></li>
+</ol>
+<p>注意：以上信息要写入合适的文件，要以当时的问题来决定。</p>
+
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+      <div>
+        <div style="padding: 10px 0; margin: 20px auto; width: 90%; text-align: center;">
+  <div>我们从这个世界获取，也希望可以回报这个世界</div>
+  <button id="rewardButton" disable="enable" onclick="var qr = document.getElementById('QR'); if (qr.style.display === 'none') {qr.style.display='block';} else {qr.style.display='none'}">
+    <span>打赏</span>
+  </button>
+  <div id="QR" style="display: none;">
+
+    
+      <div id="wechat" style="display: inline-block">
+        <img id="wechat_qr" src="/images/s-wechatpay.png" alt="Ryan Tung 微信支付"/>
+        <p>微信支付</p>
+      </div>
+    
+
+    
+      <div id="alipay" style="display: inline-block">
+        <img id="alipay_qr" src="/images/s-alipay.png" alt="Ryan Tung 支付宝"/>
+        <p>支付宝</p>
+      </div>
+    
+
+    
+
+  </div>
+</div>
+
+      </div>
+    
+
+    
+      <div>
+        <ul class="post-copyright">
+  <li class="post-copyright-author">
+    <strong>本文作者：</strong>
+    Ryan Tung
+  </li>
+  <li class="post-copyright-link">
+    <strong>本文链接：</strong>
+    <a href="https://lilujie.github.io/2018/10/18/Android-Selinux-详解/" title="Android-Selinux-详解">https://lilujie.github.io/2018/10/18/Android-Selinux-详解/</a>
+  </li>
+  <li class="post-copyright-license">
+    <strong>版权声明： </strong>
+    本博客所有文章除特别声明外，均采用 <a href="https://creativecommons.org/licenses/by-nc-sa/3.0/" rel="external nofollow" target="_blank">CC BY-NC-SA 3.0</a> 许可协议。转载请注明出处！
+  </li>
+</ul>
+
+      </div>
+    
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+			<a href="/tags/Android/" rel="tag"><i class="fa fa-tag"></i> Android</a>
+          
+			<a href="/tags/selinux/" rel="tag"><i class="fa fa-tag"></i> selinux</a>
+          
+        </div>
+      
+
+      
+      
+        <div class="post-widgets">
+        
+
+        
+
+        
+          
+          <div id="needsharebutton-postbottom">
+            <span class="btn">
+              <i class="fa fa-share-alt" aria-hidden="true"></i>
+            </span>
+          </div>
+        
+        </div>
+      
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/2018/10/20/abc/" rel="prev" title="abc">
+                abc <i class="fa fa-chevron-right"></i>
+              </a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+
+          
+
+  
+    <div class="comments" id="comments">
+      <div id="lv-container" data-id="city" data-uid="MTAyMC80MDQxMy8xNjk0MA=="></div>
+    </div>
+
+  
+
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview-wrap">
+            站点概览
+          </li>
+        </ul>
+      
+
+      <section class="site-overview-wrap sidebar-panel">
+        <div class="site-overview">
+          <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+            
+              <img class="site-author-image" itemprop="image"
+                src="/images/avatar.gif"
+                alt="Ryan Tung" />
+            
+              <p class="site-author-name" itemprop="name">Ryan Tung</p>
+              <p class="site-description motion-element" itemprop="description"></p>
+          </div>
+
+          <nav class="site-state motion-element">
+
+            
+              <div class="site-state-item site-state-posts">
+              
+                <a href="/archives/">
+              
+                  <span class="site-state-item-count">4</span>
+                  <span class="site-state-item-name">日志</span>
+                </a>
+              </div>
+            
+
+            
+              
+              
+              <div class="site-state-item site-state-categories">
+                <a href="/categories/index.html">
+                  <span class="site-state-item-count">4</span>
+                  <span class="site-state-item-name">分类</span>
+                </a>
+              </div>
+            
+
+            
+              
+              
+              <div class="site-state-item site-state-tags">
+                <a href="/tags/index.html">
+                  <span class="site-state-item-count">6</span>
+                  <span class="site-state-item-name">标签</span>
+                </a>
+              </div>
+            
+
+          </nav>
+
+          
+
+          
+            <div class="links-of-author motion-element">
+                
+                  <span class="links-of-author-item">
+                    <a href="mailto:yourname@gmail.com" target="_blank" title="E-Mail">
+                      
+                        <i class="fa fa-fw fa-envelope"></i>E-Mail</a>
+                  </span>
+                
+            </div>
+          
+
+          
+          
+
+          
+          
+
+          
+
+        </div>
+      </section>
+
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#0-简介"><span class="nav-text">0.简介</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#1-现有权限介绍"><span class="nav-text">1.现有权限介绍</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#2-现有权限存在的问题"><span class="nav-text">2. 现有权限存在的问题</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#3-SElinux权限控制"><span class="nav-text">3.SElinux权限控制</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#4-SELinux-的运作模式"><span class="nav-text">4.SELinux 的运作模式</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#5-SElinxu为什么可以解决DAC的问题？"><span class="nav-text">5.SElinxu为什么可以解决DAC的问题？</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#6-Android中SElinux的体现"><span class="nav-text">6.Android中SElinux的体现</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#6-1-Android-中的安全性文本"><span class="nav-text">6.1 Android 中的安全性文本</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#6-2-Android-中的政策"><span class="nav-text">6.2 Android 中的政策</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#6-3-类型定义"><span class="nav-text">6.3 类型定义</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#7-如何快速添加一安全性规则"><span class="nav-text">7.如何快速添加一安全性规则</span></a></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
+      
+
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright">&copy; <span itemprop="copyrightYear">2018</span>
+  <span class="with-love">
+    <i class="fa fa-user"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">Ryan Tung</span>
+
+  
+</div>
+
+
+  <div class="powered-by">由 <a class="theme-link" target="_blank" href="https://hexo.io">Hexo</a> 强力驱动</div>
+
+
+
+  <span class="post-meta-divider">|</span>
+
+
+
+  <div class="theme-info">主题 &mdash; <a class="theme-link" target="_blank" href="https://github.com/iissnan/hexo-theme-next">NexT.Pisces</a> v5.1.4</div>
+
+
+
+
+        
+
+
+
+
+
+
+
+        
+      </div>
+    </footer>
+
+    
+      <div class="back-to-top">
+        <i class="fa fa-arrow-up"></i>
+        
+          <span id="scrollpercent"><span>0</span>%</span>
+        
+      </div>
+    
+
+    
+
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery/index.js?v=2.1.3"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+  
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=5.1.4"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=5.1.4"></script>
+
+
+
+  
+  
+
+
+  <script type="text/javascript" src="/js/src/affix.js?v=5.1.4"></script>
+
+  <script type="text/javascript" src="/js/src/schemes/pisces.js?v=5.1.4"></script>
+
+
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.4"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.1.4"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.1.4"></script>
+
+
+
+  
+
+
+  
+
+
+
+
+	
+
+
+
+
+
+  
+
+
+
+
+
+  
+    <script type="text/javascript">
+      (function(d, s) {
+        var j, e = d.getElementsByTagName(s)[0];
+        if (typeof LivereTower === 'function') { return; }
+        j = d.createElement(s);
+        j.src = 'https://cdn-city.livere.com/js/embed.dist.js';
+        j.async = true;
+        e.parentNode.insertBefore(j, e);
+      })(document, 'script');
+    </script>
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+  <script type="text/javascript">
+    // Popup Window;
+    var isfetched = false;
+    var isXml = true;
+    // Search DB path;
+    var search_path = "search.xml";
+    if (search_path.length === 0) {
+      search_path = "search.xml";
+    } else if (/json$/i.test(search_path)) {
+      isXml = false;
+    }
+    var path = "/" + search_path;
+    // monitor main search box;
+
+    var onPopupClose = function (e) {
+      $('.popup').hide();
+      $('#local-search-input').val('');
+      $('.search-result-list').remove();
+      $('#no-result').remove();
+      $(".local-search-pop-overlay").remove();
+      $('body').css('overflow', '');
+    }
+
+    function proceedsearch() {
+      $("body")
+        .append('<div class="search-popup-overlay local-search-pop-overlay"></div>')
+        .css('overflow', 'hidden');
+      $('.search-popup-overlay').click(onPopupClose);
+      $('.popup').toggle();
+      var $localSearchInput = $('#local-search-input');
+      $localSearchInput.attr("autocapitalize", "none");
+      $localSearchInput.attr("autocorrect", "off");
+      $localSearchInput.focus();
+    }
+
+    // search function;
+    var searchFunc = function(path, search_id, content_id) {
+      'use strict';
+
+      // start loading animation
+      $("body")
+        .append('<div class="search-popup-overlay local-search-pop-overlay">' +
+          '<div id="search-loading-icon">' +
+          '<i class="fa fa-spinner fa-pulse fa-5x fa-fw"></i>' +
+          '</div>' +
+          '</div>')
+        .css('overflow', 'hidden');
+      $("#search-loading-icon").css('margin', '20% auto 0 auto').css('text-align', 'center');
+
+      $.ajax({
+        url: path,
+        dataType: isXml ? "xml" : "json",
+        async: true,
+        success: function(res) {
+          // get the contents from search data
+          isfetched = true;
+          $('.popup').detach().appendTo('.header-inner');
+          var datas = isXml ? $("entry", res).map(function() {
+            return {
+              title: $("title", this).text(),
+              content: $("content",this).text(),
+              url: $("url" , this).text()
+            };
+          }).get() : res;
+          var input = document.getElementById(search_id);
+          var resultContent = document.getElementById(content_id);
+          var inputEventFunction = function() {
+            var searchText = input.value.trim().toLowerCase();
+            var keywords = searchText.split(/[\s\-]+/);
+            if (keywords.length > 1) {
+              keywords.push(searchText);
+            }
+            var resultItems = [];
+            if (searchText.length > 0) {
+              // perform local searching
+              datas.forEach(function(data) {
+                var isMatch = false;
+                var hitCount = 0;
+                var searchTextCount = 0;
+                var title = data.title.trim();
+                var titleInLowerCase = title.toLowerCase();
+                var content = data.content.trim().replace(/<[^>]+>/g,"");
+                var contentInLowerCase = content.toLowerCase();
+                var articleUrl = decodeURIComponent(data.url);
+                var indexOfTitle = [];
+                var indexOfContent = [];
+                // only match articles with not empty titles
+                if(title != '') {
+                  keywords.forEach(function(keyword) {
+                    function getIndexByWord(word, text, caseSensitive) {
+                      var wordLen = word.length;
+                      if (wordLen === 0) {
+                        return [];
+                      }
+                      var startPosition = 0, position = [], index = [];
+                      if (!caseSensitive) {
+                        text = text.toLowerCase();
+                        word = word.toLowerCase();
+                      }
+                      while ((position = text.indexOf(word, startPosition)) > -1) {
+                        index.push({position: position, word: word});
+                        startPosition = position + wordLen;
+                      }
+                      return index;
+                    }
+
+                    indexOfTitle = indexOfTitle.concat(getIndexByWord(keyword, titleInLowerCase, false));
+                    indexOfContent = indexOfContent.concat(getIndexByWord(keyword, contentInLowerCase, false));
+                  });
+                  if (indexOfTitle.length > 0 || indexOfContent.length > 0) {
+                    isMatch = true;
+                    hitCount = indexOfTitle.length + indexOfContent.length;
+                  }
+                }
+
+                // show search results
+
+                if (isMatch) {
+                  // sort index by position of keyword
+
+                  [indexOfTitle, indexOfContent].forEach(function (index) {
+                    index.sort(function (itemLeft, itemRight) {
+                      if (itemRight.position !== itemLeft.position) {
+                        return itemRight.position - itemLeft.position;
+                      } else {
+                        return itemLeft.word.length - itemRight.word.length;
+                      }
+                    });
+                  });
+
+                  // merge hits into slices
+
+                  function mergeIntoSlice(text, start, end, index) {
+                    var item = index[index.length - 1];
+                    var position = item.position;
+                    var word = item.word;
+                    var hits = [];
+                    var searchTextCountInSlice = 0;
+                    while (position + word.length <= end && index.length != 0) {
+                      if (word === searchText) {
+                        searchTextCountInSlice++;
+                      }
+                      hits.push({position: position, length: word.length});
+                      var wordEnd = position + word.length;
+
+                      // move to next position of hit
+
+                      index.pop();
+                      while (index.length != 0) {
+                        item = index[index.length - 1];
+                        position = item.position;
+                        word = item.word;
+                        if (wordEnd > position) {
+                          index.pop();
+                        } else {
+                          break;
+                        }
+                      }
+                    }
+                    searchTextCount += searchTextCountInSlice;
+                    return {
+                      hits: hits,
+                      start: start,
+                      end: end,
+                      searchTextCount: searchTextCountInSlice
+                    };
+                  }
+
+                  var slicesOfTitle = [];
+                  if (indexOfTitle.length != 0) {
+                    slicesOfTitle.push(mergeIntoSlice(title, 0, title.length, indexOfTitle));
+                  }
+
+                  var slicesOfContent = [];
+                  while (indexOfContent.length != 0) {
+                    var item = indexOfContent[indexOfContent.length - 1];
+                    var position = item.position;
+                    var word = item.word;
+                    // cut out 100 characters
+                    var start = position - 20;
+                    var end = position + 80;
+                    if(start < 0){
+                      start = 0;
+                    }
+                    if (end < position + word.length) {
+                      end = position + word.length;
+                    }
+                    if(end > content.length){
+                      end = content.length;
+                    }
+                    slicesOfContent.push(mergeIntoSlice(content, start, end, indexOfContent));
+                  }
+
+                  // sort slices in content by search text's count and hits' count
+
+                  slicesOfContent.sort(function (sliceLeft, sliceRight) {
+                    if (sliceLeft.searchTextCount !== sliceRight.searchTextCount) {
+                      return sliceRight.searchTextCount - sliceLeft.searchTextCount;
+                    } else if (sliceLeft.hits.length !== sliceRight.hits.length) {
+                      return sliceRight.hits.length - sliceLeft.hits.length;
+                    } else {
+                      return sliceLeft.start - sliceRight.start;
+                    }
+                  });
+
+                  // select top N slices in content
+
+                  var upperBound = parseInt('1');
+                  if (upperBound >= 0) {
+                    slicesOfContent = slicesOfContent.slice(0, upperBound);
+                  }
+
+                  // highlight title and content
+
+                  function highlightKeyword(text, slice) {
+                    var result = '';
+                    var prevEnd = slice.start;
+                    slice.hits.forEach(function (hit) {
+                      result += text.substring(prevEnd, hit.position);
+                      var end = hit.position + hit.length;
+                      result += '<b class="search-keyword">' + text.substring(hit.position, end) + '</b>';
+                      prevEnd = end;
+                    });
+                    result += text.substring(prevEnd, slice.end);
+                    return result;
+                  }
+
+                  var resultItem = '';
+
+                  if (slicesOfTitle.length != 0) {
+                    resultItem += "<li><a href='" + articleUrl + "' class='search-result-title'>" + highlightKeyword(title, slicesOfTitle[0]) + "</a>";
+                  } else {
+                    resultItem += "<li><a href='" + articleUrl + "' class='search-result-title'>" + title + "</a>";
+                  }
+
+                  slicesOfContent.forEach(function (slice) {
+                    resultItem += "<a href='" + articleUrl + "'>" +
+                      "<p class=\"search-result\">" + highlightKeyword(content, slice) +
+                      "...</p>" + "</a>";
+                  });
+
+                  resultItem += "</li>";
+                  resultItems.push({
+                    item: resultItem,
+                    searchTextCount: searchTextCount,
+                    hitCount: hitCount,
+                    id: resultItems.length
+                  });
+                }
+              })
+            };
+            if (keywords.length === 1 && keywords[0] === "") {
+              resultContent.innerHTML = '<div id="no-result"><i class="fa fa-search fa-5x" /></div>'
+            } else if (resultItems.length === 0) {
+              resultContent.innerHTML = '<div id="no-result"><i class="fa fa-frown-o fa-5x" /></div>'
+            } else {
+              resultItems.sort(function (resultLeft, resultRight) {
+                if (resultLeft.searchTextCount !== resultRight.searchTextCount) {
+                  return resultRight.searchTextCount - resultLeft.searchTextCount;
+                } else if (resultLeft.hitCount !== resultRight.hitCount) {
+                  return resultRight.hitCount - resultLeft.hitCount;
+                } else {
+                  return resultRight.id - resultLeft.id;
+                }
+              });
+              var searchResultList = '<ul class=\"search-result-list\">';
+              resultItems.forEach(function (result) {
+                searchResultList += result.item;
+              })
+              searchResultList += "</ul>";
+              resultContent.innerHTML = searchResultList;
+            }
+          }
+
+          if ('auto' === 'auto') {
+            input.addEventListener('input', inputEventFunction);
+          } else {
+            $('.search-icon').click(inputEventFunction);
+            input.addEventListener('keypress', function (event) {
+              if (event.keyCode === 13) {
+                inputEventFunction();
+              }
+            });
+          }
+
+          // remove loading animation
+          $(".local-search-pop-overlay").remove();
+          $('body').css('overflow', '');
+
+          proceedsearch();
+        }
+      });
+    }
+
+    // handle and trigger popup window;
+    $('.popup-trigger').click(function(e) {
+      e.stopPropagation();
+      if (isfetched === false) {
+        searchFunc(path, 'local-search-input', 'local-search-result');
+      } else {
+        proceedsearch();
+      };
+    });
+
+    $('.popup-btn-close').click(onPopupClose);
+    $('.popup').click(function(e){
+      e.stopPropagation();
+    });
+    $(document).on('keyup', function (event) {
+      var shouldDismissSearchPopup = event.which === 27 &&
+        $('.search-popup').is(':visible');
+      if (shouldDismissSearchPopup) {
+        onPopupClose();
+      }
+    });
+  </script>
+
+
+
+
+
+  
+
+  
+  <script src="https://cdn1.lncld.net/static/js/av-core-mini-0.6.4.js"></script>
+  <script>AV.initialize("XLjJW0Stgj8up1GVctuwl4aL-gzGzoHsz", "1GOIpHYzegD7pYTKXnJf98vD");</script>
+  <script>
+    function showTime(Counter) {
+      var query = new AV.Query(Counter);
+      var entries = [];
+      var $visitors = $(".leancloud_visitors");
+
+      $visitors.each(function () {
+        entries.push( $(this).attr("id").trim() );
+      });
+
+      query.containedIn('url', entries);
+      query.find()
+        .done(function (results) {
+          var COUNT_CONTAINER_REF = '.leancloud-visitors-count';
+
+          if (results.length === 0) {
+            $visitors.find(COUNT_CONTAINER_REF).text(0);
+            return;
+          }
+
+          for (var i = 0; i < results.length; i++) {
+            var item = results[i];
+            var url = item.get('url');
+            var time = item.get('time');
+            var element = document.getElementById(url);
+
+            $(element).find(COUNT_CONTAINER_REF).text(time);
+          }
+          for(var i = 0; i < entries.length; i++) {
+            var url = entries[i];
+            var element = document.getElementById(url);
+            var countSpan = $(element).find(COUNT_CONTAINER_REF);
+            if( countSpan.text() == '') {
+              countSpan.text(0);
+            }
+          }
+        })
+        .fail(function (object, error) {
+          console.log("Error: " + error.code + " " + error.message);
+        });
+    }
+
+    function addCount(Counter) {
+      var $visitors = $(".leancloud_visitors");
+      var url = $visitors.attr('id').trim();
+      var title = $visitors.attr('data-flag-title').trim();
+      var query = new AV.Query(Counter);
+
+      query.equalTo("url", url);
+      query.find({
+        success: function(results) {
+          if (results.length > 0) {
+            var counter = results[0];
+            counter.fetchWhenSave(true);
+            counter.increment("time");
+            counter.save(null, {
+              success: function(counter) {
+                var $element = $(document.getElementById(url));
+                $element.find('.leancloud-visitors-count').text(counter.get('time'));
+              },
+              error: function(counter, error) {
+                console.log('Failed to save Visitor num, with error message: ' + error.message);
+              }
+            });
+          } else {
+            var newcounter = new Counter();
+            /* Set ACL */
+            var acl = new AV.ACL();
+            acl.setPublicReadAccess(true);
+            acl.setPublicWriteAccess(true);
+            newcounter.setACL(acl);
+            /* End Set ACL */
+            newcounter.set("title", title);
+            newcounter.set("url", url);
+            newcounter.set("time", 1);
+            newcounter.save(null, {
+              success: function(newcounter) {
+                var $element = $(document.getElementById(url));
+                $element.find('.leancloud-visitors-count').text(newcounter.get('time'));
+              },
+              error: function(newcounter, error) {
+                console.log('Failed to create');
+              }
+            });
+          }
+        },
+        error: function(error) {
+          console.log('Error:' + error.code + " " + error.message);
+        }
+      });
+    }
+
+    $(function() {
+      var Counter = AV.Object.extend("Counter");
+      if ($('.leancloud_visitors').length == 1) {
+        addCount(Counter);
+      } else if ($('.post-title-link').length > 1) {
+        showTime(Counter);
+      }
+    });
+  </script>
+
+
+
+  
+
+  
+
+  
+  
+  
+  <link rel="stylesheet" href="/lib/needsharebutton/needsharebutton.css">
+
+  
+  
+  <script src="/lib/needsharebutton/needsharebutton.js"></script>
+
+  <script>
+    
+      pbOptions = {};
+      
+          pbOptions.iconStyle = "default";
+      
+          pbOptions.boxForm = "horizontal";
+      
+          pbOptions.position = "bottomCenter";
+      
+          pbOptions.networks = "Weibo,Wechat,Douban";
+      
+      new needShareButton('#needsharebutton-postbottom', pbOptions);
+    
+    
+  </script>
+
+  
+
+  
+  
+
+
+  
+
+  
+
+</body>
+</html>
