@@ -1,6 +1,6 @@
 ---
 title: Android-Selinux-详解
-tags: [Android,selinux]
+tags: [Android-selinux]
 categories: 'selinux'
 comments: true
 copyright: true
