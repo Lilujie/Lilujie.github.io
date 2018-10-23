@@ -8,6 +8,7 @@
   "dependencies": {
     "hexo": "^3.7.1",
     "hexo-asset-image": "git+https://github.com/CodeFalling/hexo-asset-image.git",
+    "hexo-blog-encrypt": "2.0.*",
     "hexo-deployer-git": "^0.3.1",
     "hexo-generator-archive": "^0.1.5",
     "hexo-generator-baidu-sitemap": "^0.1.5",
@@ -20,7 +21,6 @@
     "hexo-renderer-ejs": "^0.3.1",
     "hexo-renderer-marked": "^0.3.2",
     "hexo-renderer-stylus": "^0.3.3",
-    "hexo-server": "^0.3.1",
-    "hexo-blog-encrypt": "2.0.*"
+    "hexo-server": "^0.3.1"
   }
 }
