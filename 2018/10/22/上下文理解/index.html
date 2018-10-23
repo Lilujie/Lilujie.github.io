@@ -98,7 +98,7 @@
 
 
 
-  <meta name="keywords" content="进程调度、锁," />
+  <meta name="keywords" content="中断、进程," />
 
 
 
@@ -109,18 +109,18 @@
 
 
 
-<meta name="description" content="一、什么叫进程调度？　　决定哪个进程投入运行，什么时候运行，运行多久，就叫进程调度。实现这样功能的程序，叫进程调度程序。 二、目的：　　在进程快速响应和系统最大利用率之间寻找平衡。 　　例如I/O消耗型进程需要在键盘等I/O设备产生硬件中断时快速响应，其他时间不消耗处理器，大部分在等待。 　　而处理器消耗型进程，要占着CPU，例如视频播放器。 三、时间片的概念：　　在进程被抢占之前，所能持续运行的">
-<meta name="keywords" content="进程调度、锁">
+<meta name="description" content="举例：　　定时器到了，执行定时器的handler function，这算处于中断上下文。　　内核调度，调度的线程、进程，这算处于进程上下文。。。  中断线程化：　　内核中有一个中断线程化的概念，属于中断下半部的范畴，中断线程是可以被调度的，处于进程上下文。 workqueue　　在中断线程化机制合入Linux内核之前，中断下半部的三种旧实现机制（SoftIRQ、tasklet、workqueue">
+<meta name="keywords" content="中断、进程">
 <meta property="og:type" content="article">
-<meta property="og:title" content="Linux进程调度和内核同步">
-<meta property="og:url" content="https://lilujie.github.io/2018/10/20/是拉法基/index.html">
+<meta property="og:title" content="上下文理解">
+<meta property="og:url" content="https://lilujie.github.io/2018/10/22/上下文理解/index.html">
 <meta property="og:site_name" content="打不死的小强">
-<meta property="og:description" content="一、什么叫进程调度？　　决定哪个进程投入运行，什么时候运行，运行多久，就叫进程调度。实现这样功能的程序，叫进程调度程序。 二、目的：　　在进程快速响应和系统最大利用率之间寻找平衡。 　　例如I/O消耗型进程需要在键盘等I/O设备产生硬件中断时快速响应，其他时间不消耗处理器，大部分在等待。 　　而处理器消耗型进程，要占着CPU，例如视频播放器。 三、时间片的概念：　　在进程被抢占之前，所能持续运行的">
+<meta property="og:description" content="举例：　　定时器到了，执行定时器的handler function，这算处于中断上下文。　　内核调度，调度的线程、进程，这算处于进程上下文。。。  中断线程化：　　内核中有一个中断线程化的概念，属于中断下半部的范畴，中断线程是可以被调度的，处于进程上下文。 workqueue　　在中断线程化机制合入Linux内核之前，中断下半部的三种旧实现机制（SoftIRQ、tasklet、workqueue">
 <meta property="og:locale" content="zh-Hans">
-<meta property="og:updated_time" content="2018-10-23T06:59:33.772Z">
+<meta property="og:updated_time" content="2018-10-23T07:05:21.412Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="Linux进程调度和内核同步">
-<meta name="twitter:description" content="一、什么叫进程调度？　　决定哪个进程投入运行，什么时候运行，运行多久，就叫进程调度。实现这样功能的程序，叫进程调度程序。 二、目的：　　在进程快速响应和系统最大利用率之间寻找平衡。 　　例如I/O消耗型进程需要在键盘等I/O设备产生硬件中断时快速响应，其他时间不消耗处理器，大部分在等待。 　　而处理器消耗型进程，要占着CPU，例如视频播放器。 三、时间片的概念：　　在进程被抢占之前，所能持续运行的">
+<meta name="twitter:title" content="上下文理解">
+<meta name="twitter:description" content="举例：　　定时器到了，执行定时器的handler function，这算处于中断上下文。　　内核调度，调度的线程、进程，这算处于进程上下文。。。  中断线程化：　　内核中有一个中断线程化的概念，属于中断下半部的范畴，中断线程是可以被调度的，处于进程上下文。 workqueue　　在中断线程化机制合入Linux内核之前，中断下半部的三种旧实现机制（SoftIRQ、tasklet、workqueue">
 
 
 
@@ -150,13 +150,13 @@
 
 
 
-  <link rel="canonical" href="https://lilujie.github.io/2018/10/20/是拉法基/"/>
+  <link rel="canonical" href="https://lilujie.github.io/2018/10/22/上下文理解/"/>
 
 
 
 
 
-  <title>Linux进程调度和内核同步 | 打不死的小强</title>
+  <title>上下文理解 | 打不死的小强</title>
   
 
 
@@ -338,7 +338,7 @@
   
   
   <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="https://lilujie.github.io/2018/10/20/是拉法基/">
+    <link itemprop="mainEntityOfPage" href="https://lilujie.github.io/2018/10/22/上下文理解/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="name" content="Ryan Tung">
@@ -355,7 +355,7 @@
 
         
         
-          <h1 class="post-title" itemprop="name headline">Linux进程调度和内核同步</h1>
+          <h1 class="post-title" itemprop="name headline">上下文理解</h1>
         
 
         <div class="post-meta">
@@ -367,8 +367,8 @@
               
                 <span class="post-meta-item-text">发表于</span>
               
-              <time title="创建于" itemprop="dateCreated datePublished" datetime="2018-10-20T10:20:31+08:00">
-                2018-10-20
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2018-10-22T11:00:59+08:00">
+                2018-10-22
               </time>
             
 
@@ -383,7 +383,7 @@
               
                 <span class="post-meta-item-text">更新于&#58;</span>
               
-              <time title="更新于" itemprop="dateModified" datetime="2018-10-23T14:59:33+08:00">
+              <time title="更新于" itemprop="dateModified" datetime="2018-10-23T15:05:21+08:00">
                 2018-10-23
               </time>
             
@@ -419,7 +419,7 @@
 
           
           
-             <span id="/2018/10/20/是拉法基/" class="leancloud_visitors" data-flag-title="Linux进程调度和内核同步">
+             <span id="/2018/10/22/上下文理解/" class="leancloud_visitors" data-flag-title="上下文理解">
                <span class="post-meta-divider">|</span>
                <span class="post-meta-item-icon">
                  <i class="fa fa-eye"></i>
@@ -450,45 +450,13 @@
       
 
       
-        <h2 id="一、什么叫进程调度？"><a href="#一、什么叫进程调度？" class="headerlink" title="一、什么叫进程调度？"></a>一、什么叫进程调度？</h2><p>　　决定哪个进程投入运行，什么时候运行，运行多久，就叫进程调度。实现这样功能的程序，叫进程调度程序。</p>
-<h2 id="二、目的："><a href="#二、目的：" class="headerlink" title="二、目的："></a>二、目的：</h2><p>　　在进程快速响应和系统最大利用率之间寻找平衡。</p>
-<p>　　例如I/O消耗型进程需要在键盘等I/O设备产生硬件中断时快速响应，其他时间不消耗处理器，大部分在等待。</p>
-<p>　　而处理器消耗型进程，要占着CPU，例如视频播放器。</p>
-<h2 id="三、时间片的概念："><a href="#三、时间片的概念：" class="headerlink" title="三、时间片的概念："></a>三、时间片的概念：</h2><p>　　在进程被抢占之前，所能持续运行的时间。</p>
-<p>　　时间片不能太短，否则显得进程调度反而消耗处理器的时间更长；</p>
-<p>　　时间片不能太长，否则显得系统交互性能太差。</p>
-<h2 id="四、两种类型的进程："><a href="#四、两种类型的进程：" class="headerlink" title="四、两种类型的进程："></a>四、两种类型的进程：</h2><p>普通进程和实时进程</p>
-<p>　　普通进程的调度算法是CFS（完全公平调度算法），称为SCHED_NORMAL；该算法不是直接分配时间片到进程，而是将处理器的使用比划分给进程，同时nice值（取值范围-20~19）只是作为进程获得的处理器运行比的权重。</p>
-<p>　　针对实时进程，有两种调度策略，SCHED_FIFO和SCHED_RR，暂不详细讲解。</p>
-<h2 id="五、CFS算法实现："><a href="#五、CFS算法实现：" class="headerlink" title="五、CFS算法实现："></a>五、CFS算法实现：</h2><p>　　时间记账：CFS用vruntime来实时跟踪记录一个进程运行了多少时间，还要运行多少时间；</p>
-<p>　　进程选择：利用红黑树查找vruntime最小的进程（最左叶子节点）。CFS将进程加入到rbtree中是发生在进程变为可运行状态或者是通过fork调用第一次创建进程时；将进程从rbtree中删除是发生在进程阻塞或者终止时。调度器总是选择vruntime跑得最慢的那个进程来执行。这就是所谓的“完全公平”。为了区别不同优先级的进程，优先级高的进程vruntime增长得慢，以至于它可能得到更多的运行机会。</p>
-<p>　　调度器入口：schedule（）函数。以优先级为序依次检查每一个调度类，从最高优先级的调度类中选择最高优先级的进程。</p>
-<p>　　睡眠和唤醒：进程把自己标记为休眠状态，从可执行红黑树中移除，放入等待队列，然后调用schedule()选择和执行一个其他进程。</p>
-<h2 id="六、内核抢占和上下文切换："><a href="#六、内核抢占和上下文切换：" class="headerlink" title="六、内核抢占和上下文切换："></a>六、内核抢占和上下文切换：</h2><p>　　上下文切换：由context_switch()函数负责。</p>
-<p>　　用户抢占：内核即将返回用户空间的时候，如果need_resched标志被设置，会导致schedule()被调用。用户抢占发生在以下情况，从系统调用返回用户空间时；从中断处理程序返回用户空间时。</p>
-<p>　　内核抢占：Linux2.6开始支持内核抢占。内核抢占发生在：</p>
-<ul>
-<li>中断处理程序正在执行，且返回内核空间之前</li>
-<li>内核代码再一次具有可抢占性的时候</li>
-<li>内核中的任务显式的调用schedule</li>
-<li>内核中的任务阻塞时</li>
-</ul>
-<h2 id="七、内核同步："><a href="#七、内核同步：" class="headerlink" title="七、内核同步："></a>七、内核同步：</h2><p>　　在内核抢占和进程调度时，同一资源存在访问过程被打断，或者在打断和重新执行期间，被另一个进程访问的风险，如果没有内核同步技术，将得到意料之外的结果。</p>
-<p>　　考虑内核同步时需要了解几个内核约束场景：</p>
-<ul>
-<li><p>同一个tasklet不可能同时在几个CPU上执行。——所以仅被一种tasklet访问的数据结构不需要同步。</p>
-</li>
-<li><p>软中断和tasklet不能在一个给定的CPU上交错执行。——所以仅被软中断和tasklet访问的每CPU变量不需要同步。</p>
-</li>
-<li><p>中断ISR、软中断和tasklet既不可以被抢占也不能被阻塞。在最坏情况下，它们的执行将有轻微的延迟，因为在其执行的过程中可能发生其他的中断(内核控制路径的嵌套执行)。执行中断处理的内核控制路径不能被执行可延迟函数或系统调用服务例程的内核控制路径中断。</p>
-</li>
-</ul>
-<h2 id="同步技术有哪些？"><a href="#同步技术有哪些？" class="headerlink" title="同步技术有哪些？"></a>同步技术有哪些？</h2><p>（1）每CPU变量：主要是数据结构数组，每个CPU对应数组的一个元素。</p>
-<p>（2）原子操作：原子的“读——修改——写”。</p>
-<p>（3）自旋锁：加锁时忙等。一直旋转，等待锁释放，不会休眠。不可递归。</p>
-<p>（4）信号量：加锁时阻塞等待（睡眠）。发现别人占用锁后就休眠自己，别人释放后就唤醒自己。</p>
-<p>（5）顺序锁：基于访问计数器的锁。</p>
-<p>（6）内存屏障：避免指令重新排序。</p>
+        <hr>
+<h1 id="举例："><a href="#举例：" class="headerlink" title="举例："></a>举例：</h1><p>　　定时器到了，执行定时器的handler function，这算处于中断上下文。<br>　　内核调度，调度的线程、进程，这算处于进程上下文。。。</p>
+<hr>
+<h1 id="中断线程化："><a href="#中断线程化：" class="headerlink" title="中断线程化："></a>中断线程化：</h1><p>　　内核中有一个中断线程化的概念，属于中断下半部的范畴，中断线程是可以被调度的，处于进程上下文。</p>
+<h1 id="workqueue"><a href="#workqueue" class="headerlink" title="workqueue"></a>workqueue</h1><p>　　在中断线程化机制合入Linux内核之前，中断下半部的三种旧实现机制（SoftIRQ、tasklet、workqueue）中的workqueue，就有了一些中断线程化的影子。<strong>workqueue的基本原理就是把需要推迟执行的工作，交由一个内核线程来执行，</strong>它是利用进程上下文来执行中断下半部的操作，因此workqueue允许重新调度和睡眠。</p>
+<hr>
+<h1 id="中断上下文和中断上半部下半部"><a href="#中断上下文和中断上半部下半部" class="headerlink" title="中断上下文和中断上半部下半部"></a>中断上下文和中断上半部下半部</h1><p>　　在这里容易混淆中断上下文和中断上半部下半部的概念。中断上下文指的是中断发生时，CPU响应一个中断并执行中断服务程序时，内核处于中断上下文。<strong>中断服务程序处于中断上半部，然后一些耗时的操作会放在下半部执行。</strong>换句话说，一个完整的中断处理流程包含中断处理程序和中断下半部。<strong>我们经常说中断上下文中不能调用含有睡眠的函数，其实与中断上半段不能执行一些耗时操作的说法是一致的。</strong></p>
 
       
     </div>
@@ -538,7 +506,7 @@
   </li>
   <li class="post-copyright-link">
     <strong>本文链接：</strong>
-    <a href="https://lilujie.github.io/2018/10/20/是拉法基/" title="Linux进程调度和内核同步">https://lilujie.github.io/2018/10/20/是拉法基/</a>
+    <a href="https://lilujie.github.io/2018/10/22/上下文理解/" title="上下文理解">https://lilujie.github.io/2018/10/22/上下文理解/</a>
   </li>
   <li class="post-copyright-license">
     <strong>版权声明： </strong>
@@ -553,7 +521,7 @@
       
         <div class="post-tags">
           
-			<a href="/tags/进程调度、锁/" rel="tag"><i class="fa fa-tag"></i> 进程调度、锁</a>
+			<a href="/tags/中断、进程/" rel="tag"><i class="fa fa-tag"></i> 中断、进程</a>
           
         </div>
       
@@ -581,8 +549,8 @@
         <div class="post-nav">
           <div class="post-nav-next post-nav-item">
             
-              <a href="/2018/10/20/abc/" rel="next" title="ARM64内存布局总结">
-                <i class="fa fa-chevron-left"></i> ARM64内存布局总结
+              <a href="/2018/10/20/Linux进程调度和内核同步/" rel="next" title="Linux进程调度和内核同步">
+                <i class="fa fa-chevron-left"></i> Linux进程调度和内核同步
               </a>
             
           </div>
@@ -591,8 +559,8 @@
 
           <div class="post-nav-prev post-nav-item">
             
-              <a href="/2018/10/22/123/" rel="prev" title="上下文理解">
-                上下文理解 <i class="fa fa-chevron-right"></i>
+              <a href="/2018/10/23/伙伴系统与slab-slub分配器/" rel="prev" title="伙伴系统与slab/slub分配器">
+                伙伴系统与slab/slub分配器 <i class="fa fa-chevron-right"></i>
               </a>
             
           </div>
@@ -744,7 +712,7 @@
             
 
             
-              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#一、什么叫进程调度？"><span class="nav-text">一、什么叫进程调度？</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#二、目的："><span class="nav-text">二、目的：</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#三、时间片的概念："><span class="nav-text">三、时间片的概念：</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#四、两种类型的进程："><span class="nav-text">四、两种类型的进程：</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#五、CFS算法实现："><span class="nav-text">五、CFS算法实现：</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#六、内核抢占和上下文切换："><span class="nav-text">六、内核抢占和上下文切换：</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#七、内核同步："><span class="nav-text">七、内核同步：</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#同步技术有哪些？"><span class="nav-text">同步技术有哪些？</span></a></li></ol></div>
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#举例："><span class="nav-text">举例：</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#中断线程化："><span class="nav-text">中断线程化：</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#workqueue"><span class="nav-text">workqueue</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#中断上下文和中断上半部下半部"><span class="nav-text">中断上下文和中断上半部下半部</span></a></li></ol></div>
             
 
           </div>

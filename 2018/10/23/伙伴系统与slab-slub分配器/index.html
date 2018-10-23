@@ -118,7 +118,7 @@
 <meta property="og:description" content="&amp;emsp;&amp;emsp;内存管理有两个算法：伙伴算法和slab/slub算法。伙伴算法是以页为单位管理内存，slab算法是以字节为单位管理内存，是内核的小内存管理算法。slab分配器并没有脱离伙伴系统，而是基于伙伴系统分配的大内存进一步细分成小内存。先讲伙伴系统，再讲slab分配器。 &amp;emsp;&amp;emsp;伙伴系统是基于bootmem机制来分配一些数据结构的。bootmem初始化的时候会调用fr">
 <meta property="og:locale" content="zh-Hans">
 <meta property="og:image" content="https://lilujie.github.io/2018/10/23/伙伴系统与slab-slub分配器/伙伴系统与slab.png">
-<meta property="og:updated_time" content="2018-10-23T07:37:43.012Z">
+<meta property="og:updated_time" content="2018-10-23T07:41:49.728Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="伙伴系统与slab&#x2F;slub分配器">
 <meta name="twitter:description" content="&amp;emsp;&amp;emsp;内存管理有两个算法：伙伴算法和slab/slub算法。伙伴算法是以页为单位管理内存，slab算法是以字节为单位管理内存，是内核的小内存管理算法。slab分配器并没有脱离伙伴系统，而是基于伙伴系统分配的大内存进一步细分成小内存。先讲伙伴系统，再讲slab分配器。 &amp;emsp;&amp;emsp;伙伴系统是基于bootmem机制来分配一些数据结构的。bootmem初始化的时候会调用fr">
@@ -385,7 +385,7 @@
               
                 <span class="post-meta-item-text">更新于&#58;</span>
               
-              <time title="更新于" itemprop="dateModified" datetime="2018-10-23T15:37:43+08:00">
+              <time title="更新于" itemprop="dateModified" datetime="2018-10-23T15:41:49+08:00">
                 2018-10-23
               </time>
             
@@ -570,7 +570,7 @@ struct free_area    free_area[MAX_ORDER];
         <div class="post-nav">
           <div class="post-nav-next post-nav-item">
             
-              <a href="/2018/10/22/123/" rel="next" title="上下文理解">
+              <a href="/2018/10/22/上下文理解/" rel="next" title="上下文理解">
                 <i class="fa fa-chevron-left"></i> 上下文理解
               </a>
             
