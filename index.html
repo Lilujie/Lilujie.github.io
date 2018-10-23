@@ -381,7 +381,7 @@
               
                 <span class="post-meta-item-text">更新于&#58;</span>
               
-              <time title="更新于" itemprop="dateModified" datetime="2018-10-23T14:01:56+08:00">
+              <time title="更新于" itemprop="dateModified" datetime="2018-10-23T14:35:20+08:00">
                 2018-10-23
               </time>
             
@@ -451,13 +451,13 @@
         
           
           
-举例：定时器到了，执行定时器的handler function，这算处于中断上下文。
-内核调度，调度的线程、进程，这算处于进程上下文。。。
+举例：　　定时器到了，执行定时器的handler function，这算处于中断上下文。
+　　内核调度，调度的线程、进程，这算处于进程上下文。。。
 
-中断线程化：内核中有一个中断线程化的概念，属于中断下半部的范畴，中断线程是可以被调度的，处于进程上下文。
-workqueue在中断线程化机制合入Linux内核之前，中断下半部的三种旧实现机制（SoftIRQ、tasklet、workqueue）中的workqueue，就有了一些中断线程化的影子。workqueue的基本原理就是把需要推迟执行的工作，交由一个内核线程来执行，它是利用进程上下文来执行中断下半部的操作，因此workqueue允许重新调度和睡眠。
+中断线程化：　　内核中有一个中断线程化的概念，属于中断下半部的范畴，中断线程是可以被调度的，处于进程上下文。
+workqueue　　在中断线程化机制合入Linux内核之前，中断下半部的三种旧实现机制（SoftIRQ、tasklet、workqueue）中的workqueue，就有了一些中断线程化的影子。workqueue的基本原理就是把需要推迟执行的工作，交由一个内核线程来执行，它是利用进程上下文来执行中断下半部的操作，因此workqueue允许重新调度和睡眠。
 
-中断上下文和中断上半部下半部在这里
+中断上下文和中断上
           ...
           <!--noindex-->
           <div class="post-button text-center">
@@ -738,7 +738,7 @@ workqueue在中断线程化机制合入Linux内核之前，中断下半部的三
               
                 <span class="post-meta-item-text">更新于&#58;</span>
               
-              <time title="更新于" itemprop="dateModified" datetime="2018-10-23T14:14:34+08:00">
+              <time title="更新于" itemprop="dateModified" datetime="2018-10-23T14:35:24+08:00">
                 2018-10-23
               </time>
             
@@ -807,7 +807,7 @@ workqueue在中断线程化机制合入Linux内核之前，中断下半部的三
       
         
           
-          综述：kernel image在被bootloader或者UEFI加载后，最终会跳到kernel的入口代码处，顺便将一些参数传给内核。kernel的启动包括两个阶段，分别由两个head.S描述。第一个阶段是内核的解压缩和重定位，第二阶段从stext开始，主要完成的工作有：参数检查，创建初始化页表，设置C代码运行环境，为跳转到内核第一个真正的C函数start_kernel做准备。所以，第二阶段这里包含了一次页表的创建，创建页表的入口是”__create_page_tables”。后面从c函数start_kernel开始，内核在start_kernel()-&gt;setup_arch()中通过arm64_memblock_init( 
+          综述：　　kernel image在被bootloader或者UEFI加载后，最终会跳到kernel的入口代码处，顺便将一些参数传给内核。kernel的启动包括两个阶段，分别由两个head.S描述。第一个阶段是内核的解压缩和重定位，第二阶段从stext开始，主要完成的工作有：参数检查，创建初始化页表，设置C代码运行环境，为跳转到内核第一个真正的C函数start_kernel做准备。所以，第二阶段这里包含了一次页表的创建，创建页表的入口是”__create_page_tables”。后面从c函数start_kernel开始，内核在start_kernel()-&gt;setup_arch()中通过arm64_memblock_init
           ...
           <!--noindex-->
           <div class="post-button text-center">
@@ -909,8 +909,8 @@ workqueue在中断线程化机制合入Linux内核之前，中断下半部的三
               
                 <span class="post-meta-item-text">更新于&#58;</span>
               
-              <time title="更新于" itemprop="dateModified" datetime="2018-10-22T10:56:56+08:00">
-                2018-10-22
+              <time title="更新于" itemprop="dateModified" datetime="2018-10-23T14:35:15+08:00">
+                2018-10-23
               </time>
             
           </span>
@@ -995,14 +995,14 @@ workqueue在中断线程化机制合入Linux内核之前，中断下半部的三
 
 
 
-0.简介 SELINUX是可以理解为一种android上面的安全机制，是有美国国家安全局和一些公司设计的一个针对linux的安全加强系统我们可以通过配置SELINUX的相关policy，来定制自己的手机的一些权限。它比原有linux 权限机制更加严格。
+0.简介 　　SELINUX是可以理解为一种android上面的安全机制，是有美国国家安全局和一些公司设计的一个针对linux的安全加强系统我们可以通过配置SELINUX的相关policy，来定制自己的手机的一些权限。它比原有linux 权限机制更加严格。
 1.现有权限介绍现有的权限:自主式访问控制, DACDAC 访问方式如下图所示：
  上面的这个上关系可以通过以下方法来测试：
 
 在一台linux机器建立两个普通账户。
 用root 权限打开/tmp/目录，新建立目录，并打开。
 用其中一个账户来编写如下的程序并通过ＧＣＣ编译
-用同一个账户
+用同一个
           ...
           <!--noindex-->
           <div class="post-button text-center">
