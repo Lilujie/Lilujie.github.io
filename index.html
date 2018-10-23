@@ -381,7 +381,7 @@
               
                 <span class="post-meta-item-text">更新于&#58;</span>
               
-              <time title="更新于" itemprop="dateModified" datetime="2018-10-23T11:47:46+08:00">
+              <time title="更新于" itemprop="dateModified" datetime="2018-10-23T11:52:58+08:00">
                 2018-10-23
               </time>
             
@@ -455,9 +455,9 @@
 内核调度，调度的线程、进程，这算处于进程上下文。。。
 
 内核中有一个中断线程化的概念，属于中断下半部的范畴，中断线程是可以被调度的，处于进程上下文。
-在中断线程化机制合入Linux内核之前，中断下半部的三种旧实现机制（SoftIRQ、tasklet、workqueue）中的workqueue，就有了一些中断线程化的影子。==workqueue的基本原理就是把需要推迟执行的工作，交由一个内核线程来执行，它是利用进程上下文来执行中断下半部的操作，因此workqueue允许重新调度和睡眠。==
+在中断线程化机制合入Linux内核之前，中断下半部的三种旧实现机制（SoftIRQ、tasklet、workqueue）中的workqueue，就有了一些中断线程化的影子。workqueue的基本原理就是把需要推迟执行的工作，交由一个内核线程来执行，它是利用进程上下文来执行中断下半部的操作，因此workqueue允许重新调度和睡眠。
 
-在这里容易混淆中断上下文和中断上半部下半部的概念。中断上下文指
+在这里容易混淆中断上下文和中断上半部下半部的概念。中断上下文指的是中断
           ...
           <!--noindex-->
           <div class="post-button text-center">
