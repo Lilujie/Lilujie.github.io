@@ -98,7 +98,7 @@
 
 
 
-  <meta name="keywords" content="Hexo, NexT" />
+  <meta name="keywords" content="设备模型," />
 
 
 
@@ -109,13 +109,18 @@
 
 
 
-<meta property="og:type" content="website">
-<meta property="og:title" content="郁金香的季节">
-<meta property="og:url" content="https://lilujie.github.io/tags/题目/index.html">
+<meta name="description" content="module_init(test_init)的作用是将test_init放在.initcall6.init段中。内核启动时，在start_kernel中会创建一个叫kernel_init的内核线程，这个线程会调用到do_initcalls，do_initcalls函数依调用我们通过xxx_initcall注册的各种函数，优先级高的先执行。包括我们通过module_init注册的函数，在kernel">
+<meta name="keywords" content="设备模型">
+<meta property="og:type" content="article">
+<meta property="og:title" content="probe和module_init">
+<meta property="og:url" content="https://lilujie.github.io/2018/10/23/probe和module-init/index.html">
 <meta property="og:site_name" content="郁金香的季节">
+<meta property="og:description" content="module_init(test_init)的作用是将test_init放在.initcall6.init段中。内核启动时，在start_kernel中会创建一个叫kernel_init的内核线程，这个线程会调用到do_initcalls，do_initcalls函数依调用我们通过xxx_initcall注册的各种函数，优先级高的先执行。包括我们通过module_init注册的函数，在kernel">
 <meta property="og:locale" content="zh-Hans">
+<meta property="og:updated_time" content="2018-10-23T09:27:23.056Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="郁金香的季节">
+<meta name="twitter:title" content="probe和module_init">
+<meta name="twitter:description" content="module_init(test_init)的作用是将test_init放在.initcall6.init段中。内核启动时，在start_kernel中会创建一个叫kernel_init的内核线程，这个线程会调用到do_initcalls，do_initcalls函数依调用我们通过xxx_initcall注册的各种函数，优先级高的先执行。包括我们通过module_init注册的函数，在kernel">
 
 
 
@@ -145,13 +150,13 @@
 
 
 
-  <link rel="canonical" href="https://lilujie.github.io/tags/题目/"/>
+  <link rel="canonical" href="https://lilujie.github.io/2018/10/23/probe和module-init/"/>
 
 
 
 
 
-  <title>标签: 题目 | 郁金香的季节</title>
+  <title>probe和module_init | 郁金香的季节</title>
   
 
 
@@ -171,7 +176,7 @@
     
   
 
-  <div class="container sidebar-position-left ">
+  <div class="container sidebar-position-left page-post-detail">
     <div class="headband"></div>
 
     <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
@@ -319,54 +324,277 @@
           <div id="content" class="content">
             
 
-  
-  
-  
-  <div class="post-block tag">
+  <div id="posts" class="posts-expand">
+    
 
-    <div id="posts" class="posts-collapse">
-      <div class="collection-title">
-        <h1>题目<small>标签</small>
-        </h1>
-      </div>
+  
 
-      
-        
+  
+  
+  
 
   <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
-    <header class="post-header">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="https://lilujie.github.io/2018/10/23/probe和module-init/">
 
-      <h2 class="post-title">
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="Ryan Tung">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/avatar.gif">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="郁金香的季节">
+    </span>
+
+    
+      <header class="post-header">
+
         
-            <a class="post-title-link" href="/2018/10/23/内核的几个题/" itemprop="url">
-              
-                <span itemprop="name">内核的几个题</span>
-              
-            </a>
         
-      </h2>
+          <h1 class="post-title" itemprop="name headline">probe和module_init</h1>
+        
 
-      <div class="post-meta">
-        <time class="post-time" itemprop="dateCreated"
-              datetime="2018-10-23T16:33:36+08:00"
-              content="2018-10-23" >
-          10-23
-        </time>
-      </div>
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2018-10-23T16:58:42+08:00">
+                2018-10-23
+              </time>
+            
 
-    </header>
-  </article>
+            
+              <span class="post-meta-divider">|</span>
+            
 
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-check-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">更新于&#58;</span>
+              
+              <time title="更新于" itemprop="dateModified" datetime="2018-10-23T17:27:23+08:00">
+                2018-10-23
+              </time>
+            
+          </span>
+
+          
+            <span class="post-category" >
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/内核/" itemprop="url" rel="index">
+                    <span itemprop="name">内核</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+          
+
+          
+          
+             <span id="/2018/10/23/probe和module-init/" class="leancloud_visitors" data-flag-title="probe和module_init">
+               <span class="post-meta-divider">|</span>
+               <span class="post-meta-item-icon">
+                 <i class="fa fa-eye"></i>
+               </span>
+               
+                 <span class="post-meta-item-text">阅读次数&#58;</span>
+               
+                 <span class="leancloud-visitors-count"></span>
+             </span>
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <p>module_init(test_init)的作用是将test_init放在.initcall6.init段中。<br>内核启动时，在start_kernel中会创建一个叫kernel_init的内核线程，这个线程会调用到do_initcalls，do_initcalls函数依调用我们通过xxx_initcall注册的各种函数，优先级高的先执行。包括我们通过module_init注册的函数，在kernel启动的时候会被顺序执行。</p>
+<p>一般module_init注册的函数test_init中会调到注册到总线的函数如：<br>platform_driver_register<br>跟踪该注册函数，会跟踪到bus总线匹配device和driver从而执行probe的过程。依次调用如下：</p>
+<pre><code>    platform_driver_register
+
+    __platform_driver_register
+
+    driver_register
+
+    bus_add_driver
+
+    driver_attach
+
+    bus_for_each_dev  (有如下调用：fn(dev, data);指的就是__driver_attach)
+
+    __driver_attach
+
+    driver_match_device ，如果match上了，会继续向下走到driver_probe_device    match：return drv-&gt;bus-&gt;match ? drv-&gt;bus-&gt;match(dev, drv) : 1;走到总线的match函数；
+
+    really_probe
+
+    drv-&gt;probe   （回调）调用了driver的probe函数，同时将上述匹配到的device作为参数传给probe
+</code></pre><p>另外，module_init是怎么调用的呢：</p>
+<p><a href="https://blog.csdn.net/u013216061/article/details/72511653" target="_blank" rel="noopener">https://blog.csdn.net/u013216061/article/details/72511653</a></p>
+<p><a href="https://blog.csdn.net/richard_liujh/article/details/46758073" target="_blank" rel="noopener">https://blog.csdn.net/richard_liujh/article/details/46758073</a></p>
 
       
     </div>
+    
+    
+    
 
+    
+
+    
+      <div>
+        <div style="padding: 10px 0; margin: 20px auto; width: 90%; text-align: center;">
+  <div><br><br>我们从这个世界获取，也希望可以回报这个世界</div>
+  <button id="rewardButton" disable="enable" onclick="var qr = document.getElementById('QR'); if (qr.style.display === 'none') {qr.style.display='block';} else {qr.style.display='none'}">
+    <span>打赏</span>
+  </button>
+  <div id="QR" style="display: none;">
+
+    
+      <div id="wechat" style="display: inline-block">
+        <img id="wechat_qr" src="/images/s-wechatpay.png" alt="Ryan Tung 微信支付"/>
+        <p>微信支付</p>
+      </div>
+    
+
+    
+      <div id="alipay" style="display: inline-block">
+        <img id="alipay_qr" src="/images/s-alipay.png" alt="Ryan Tung 支付宝"/>
+        <p>支付宝</p>
+      </div>
+    
+
+    
+
+  </div>
+</div>
+
+      </div>
+    
+
+    
+      <div>
+        <ul class="post-copyright">
+  <li class="post-copyright-author">
+    <strong>本文作者：</strong>
+    Ryan Tung
+  </li>
+  <li class="post-copyright-link">
+    <strong>本文链接：</strong>
+    <a href="https://lilujie.github.io/2018/10/23/probe和module-init/" title="probe和module_init">https://lilujie.github.io/2018/10/23/probe和module-init/</a>
+  </li>
+  <li class="post-copyright-license">
+    <strong>版权声明： </strong>
+    本博客所有文章除特别声明外，均采用 <a href="https://creativecommons.org/licenses/by-nc-sa/3.0/" rel="external nofollow" target="_blank">CC BY-NC-SA 3.0</a> 许可协议。转载请注明出处！
+  </li>
+</ul>
+
+      </div>
+    
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+			<a href="/tags/设备模型/" rel="tag"><i class="fa fa-tag"></i> 设备模型</a>
+          
+        </div>
+      
+
+      
+      
+        <div class="post-widgets">
+        
+
+        
+
+        
+          
+          <div id="needsharebutton-postbottom">
+            <span class="btn">
+              <i class="fa fa-share-alt" aria-hidden="true"></i>
+            </span>
+          </div>
+        
+        </div>
+      
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2018/10/23/内核的几个题/" rel="next" title="内核的几个题">
+                <i class="fa fa-chevron-left"></i> 内核的几个题
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
   </div>
   
   
   
+  </article>
 
-  
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
 
 
           </div>
@@ -374,6 +602,15 @@
 
 
           
+
+  
+    <div class="comments" id="comments">
+      <div id="lv-container" data-id="city" data-uid="MTAyMC80MDQxMy8xNjk0MA=="></div>
+    </div>
+
+  
+
+
 
         </div>
         
@@ -611,6 +848,10 @@
 
 
   
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.4"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.1.4"></script>
+
+
 
   
 
@@ -639,6 +880,17 @@
 
 
 
+  
+    <script type="text/javascript">
+      (function(d, s) {
+        var j, e = d.getElementsByTagName(s)[0];
+        if (typeof LivereTower === 'function') { return; }
+        j = d.createElement(s);
+        j.src = 'https://cdn-city.livere.com/js/embed.dist.js';
+        j.async = true;
+        e.parentNode.insertBefore(j, e);
+      })(document, 'script');
+    </script>
   
 
 
@@ -1117,26 +1369,6 @@
   
 
   
-  
-    <script type="text/x-mathjax-config">
-      MathJax.Hub.Config({
-        tex2jax: {
-          inlineMath: [ ['$','$'], ["\\(","\\)"]  ],
-          processEscapes: true,
-          skipTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code']
-        }
-      });
-    </script>
-
-    <script type="text/x-mathjax-config">
-      MathJax.Hub.Queue(function() {
-        var all = MathJax.Hub.getAllJax(), i;
-        for (i=0; i < all.length; i += 1) {
-          all[i].SourceElement().parentNode.className += ' has-jax';
-        }
-      });
-    </script>
-    <script type="text/javascript" src="//cdn.bootcss.com/mathjax/2.7.1/latest.js?config=TeX-AMS-MML_HTMLorMML"></script>
   
 
 
