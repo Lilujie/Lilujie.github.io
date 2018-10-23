@@ -118,7 +118,7 @@
 <meta property="og:description" content="&amp;emsp;&amp;emsp;内存管理有两个算法：伙伴算法和slab/slub算法。伙伴算法是以页为单位管理内存，slab算法是以字节为单位管理内存，是内核的小内存管理算法。slab分配器并没有脱离伙伴系统，而是基于伙伴系统分配的大内存进一步细分成小内存。先讲伙伴系统，再讲slab分配器。 &amp;emsp;&amp;emsp;伙伴系统是基于bootmem机制来分配一些数据结构的。bootmem初始化的时候会调用fr">
 <meta property="og:locale" content="zh-Hans">
 <meta property="og:image" content="https://img-blog.csdn.net/20180730144539215?watermark/2/text/aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3UwMTEzMDY2NTk=/font/5a6L5L2T/fontsize/400/fill/I0JBQkFCMA==/dissolve/70">
-<meta property="og:updated_time" content="2018-10-23T07:19:07.428Z">
+<meta property="og:updated_time" content="2018-10-23T07:23:55.116Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="伙伴系统与slab&#x2F;slub分配器">
 <meta name="twitter:description" content="&amp;emsp;&amp;emsp;内存管理有两个算法：伙伴算法和slab/slub算法。伙伴算法是以页为单位管理内存，slab算法是以字节为单位管理内存，是内核的小内存管理算法。slab分配器并没有脱离伙伴系统，而是基于伙伴系统分配的大内存进一步细分成小内存。先讲伙伴系统，再讲slab分配器。 &amp;emsp;&amp;emsp;伙伴系统是基于bootmem机制来分配一些数据结构的。bootmem初始化的时候会调用fr">
@@ -385,7 +385,7 @@
               
                 <span class="post-meta-item-text">更新于&#58;</span>
               
-              <time title="更新于" itemprop="dateModified" datetime="2018-10-23T15:19:07+08:00">
+              <time title="更新于" itemprop="dateModified" datetime="2018-10-23T15:23:55+08:00">
                 2018-10-23
               </time>
             
@@ -474,8 +474,8 @@ struct free_area    free_area[MAX_ORDER];
 <p>&emsp;&emsp;伙伴的关系有三种，（1）一个被分配时，那么另一个就等着这个分配出去的块被释放后合并，然后递归的进行更大order的合并；（2）如果两个都被分配，那么肯定有一个先被释放，那么化为情况一，注意在等待伙伴被释放的同时，该块可以被分配，从而情况一化为情况二，但是最终它们结果总是趋向于情况三，也就是都被释放从而被合并然后插入到更大一层的链表中。——有效防止内存碎片的产生。</p>
 <p><img src="https://img-blog.csdn.net/20180730144539215?watermark/2/text/aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3UwMTEzMDY2NTk=/font/5a6L5L2T/fontsize/400/fill/I0JBQkFCMA==/dissolve/70" alt="csdn博客上图片地址"></p>
 <p>&emsp;&emsp;如果链表的阶数为n，页块1的页号为page_id，其伙伴的页号查找公式为：</p>
-<p>$$<br>buddy_id = page_id ^ (1 &lt;&lt; n)<br>$$</p>
-<p><br><br>&emsp;&emsp;伙伴系统申请内核内存的接口有：alloc_pages，_ _get_free_pages等。</p>
+<pre><code>buddy_id = page_id ^ (1 &lt;&lt; n)
+</code></pre><p><br><br>&emsp;&emsp;伙伴系统申请内核内存的接口有：alloc_pages，_ _get_free_pages等。</p>
 <p><br></p>
 <p>&emsp;&emsp;slub分配的原理可参考如下文章：<a href="https://blog.csdn.net/lukuen/article/details/6935068" target="_blank" rel="noopener">https://blog.csdn.net/lukuen/article/details/6935068</a></p>
 <p>&emsp;&emsp;我们在驱动开发的时候经常用到kmalloc函数，它就是基于slab分配器实现的。例如，我们分配一个17Bytes的内存，会这样调用：kmalloc(17, GFP_KERNEL)，系统会从名称“kmalloc-32”管理的slab缓存池中分配一个对象，即使浪费了剩余的15Byte。</p>
@@ -491,7 +491,7 @@ struct free_area    free_area[MAX_ORDER];
     
       <div>
         <div style="padding: 10px 0; margin: 20px auto; width: 90%; text-align: center;">
-  <div>我们从这个世界获取，也希望可以回报这个世界</div>
+  <div><br><br>我们从这个世界获取，也希望可以回报这个世界</div>
   <button id="rewardButton" disable="enable" onclick="var qr = document.getElementById('QR'); if (qr.style.display === 'none') {qr.style.display='block';} else {qr.style.display='none'}">
     <span>打赏</span>
   </button>
