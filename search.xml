@@ -1,20 +1,20 @@
 <?xml version="1.0" encoding="utf-8"?>
 <search>
   <entry>
-    <title><![CDATA[123]]></title>
+    <title><![CDATA[上下文]]></title>
     <url>%2F2018%2F10%2F22%2F123%2F</url>
-    <content type="text"></content>
+    <content type="text"><![CDATA[定时器到了，执行定时器的handler function，这算处于中断上下文。 内核调度，调度的线程、进程，这算处于进程上下文。。。 内核中有一个中断线程化的概念，属于中断下半部的范畴，中断线程是可以被调度的，处于进程上下文。 在中断线程化机制合入Linux内核之前，中断下半部的三种旧实现机制（SoftIRQ、tasklet、workqueue）中的workqueue，就有了一些中断线程化的影子。workqueue的基本原理就是把需要推迟执行的工作，交由一个内核线程来执行，它是利用进程上下文来执行中断下半部的操作，因此workqueue允许重新调度和睡眠。 在这里容易混淆中断上下文和中断上半部下半部的概念。中断上下文指的是中断发生时，CPU响应一个中断并执行中断服务程序时，内核处于中断上下文。中断服务程序处于中断上半部，然后一些耗时的操作会放在下半部执行。换句话说，一个完整的中断处理流程包含中断处理程序和中断下半部。我们经常说中断上下文中不能调用含有睡眠的函数，其实与中断上半段不能执行一些耗时操作的说法是一致的。]]></content>
       <categories>
-        <category>123</category>
+        <category>内核</category>
       </categories>
       <tags>
-        <tag>lilujie_test</tag>
+        <tag>基本概念</tag>
       </tags>
   </entry>
   <entry>
     <title><![CDATA[是拉法基]]></title>
     <url>%2F2018%2F10%2F20%2F%E6%98%AF%E6%8B%89%E6%B3%95%E5%9F%BA%2F</url>
-    <content type="text"><![CDATA[Please enter the password to read the blog. Incorrect Password! No content to display! U2FsdGVkX1+9BnWhpUC8XyJ/EU656wU9AKSMDh9e1XFRjxcQqdpBB1lWorFhG7yK10UqOgZYQmmjY4Bxw9YdUXaeMZoD54qaDTLBxtELArcd2jM0CiB3E43CJ+n58484Ff+bwxz8J7VKMNv1NVHxI7Zz3fbULtbVYTo6nI9KijnKyLL4vpLkxn4E5vcJtMAIPFY2kL6maXFtGGo6SXVGEHM5VKWRDLw3hUq1lRzX6OBl6ddcQSKTK/cxaUboATpd7HHUzG+feIbAxnvgqqzDJtiTmoEt3EQacg16qK8kE8AAHRonQABQOTriyqRZ4PZayyjmVMmNQzkDA+jOozmZmt5v5J+LktSycgqin0eWPlqV1hK8P/AmiWEvi/eAcJlX/Pzp8A8iUQl6TRYVKo+IaQ6n2GMpOuS6vLtEpmmuro3orFyvlOV3HSuNaSkAslsYb1RibxeHoUA6bNlGF4hPOKA7+JhYY/uvxOaJAzLeIvPD208ZWreOCOU1I/jbDPyPG9jEM0yS82ktRrQtuSc98T+NnucidYfdH20kPwO7rIMLbal2VlmU4cHfxYY4/lVYpZ2E0zAsvRI2Kcce6vf6nG+u+K4DmaVFXTzqhZQTRvk6FbAVKIRv9Xuzc+NenQIjiNWm5ndKZENdMNe0GVOiaKkLXhVS+9u4rjdzDxiHPZFiSeGYRfxPQr+SWEBm6bt055DCudw3mq7FDk/KjuMk0GoyprCgJMNSuGIJr5S2NO+sE84EmV56bI4ddGX+FNgjZEI8iZzzpRgg8BumyGsQmpM/Ef/u23wkoxkWL9XkbZdtqTv/+IBXLvsCXU+uO6Cvpvr1PwtiS/RqIZ6HvFNZfobHQO/cMyo1WVRxcGnQ3/VV1OmwCbYOqn7rGtKv2V7wHoqpLscz5pdZGsPeMSzq1XYyG1UW3rHXv3Il/reRkrilLjvdWJt7gxB3ZSxt35/FsNQ0IuVtr2gvEDGZNZndrHLUReSINq9soKXRN4sdVSV1fyp4ikE1zl13VH4d95DLSPVO4scUjH5ImcBv7i8eZnUXFpiaD3ZMep4UtOabG6oKF71FjVVaOsSvkDl1JW8Z+CRYGJNdyVujI2it2gGE/w4q/wP4ZzWC8/TGjS/e9PdY63hYKZTjnushbq1pI1nHlrfwqM57W0DOGmD0SyO1UcFnZIgZvIoB+5Sxjo12rBaFlZfR1NxQ8u/ittrghf7U6sRbdG29BZybZV6UoEjeuupo28YaF7ryBaef1wyFRbxtZz3KsK8pfOJhmLI+n21v4/oX0EPDBcTVSqLaZIJ5JgQTIxyXx/nt493IG1ulnqQdF8Jgkbfz9ltniZJhT1ZfHeAOffnLIu35snQqz8lVojGC8xfWMcxrm5SXZKJRqtkgDUbqGgCqRmEnlTC2SRpXgVjfBQhBce+RX6/PT8AduD7UnjKBRMVJwX5vQR5xjMNwyjdEBhkIqUyOixcPjxlEzt6Xq/pDmFGygdHJWB4UPuTU8NWC2F/lYpEJ/8nykpDsDt58TThq36md4IfpgitFo+p8r2guiQ1szoFpUU1dBXkrIxkQr8EOZfR6U7/27+EWW4AeGOKSrU6ukxAXgjmn0we9FwzRb+zwQyyLkNc8HVFPMXJAyzVvxFnUmGEPW7dXMwCiD7D/47DeRrkyLjbx/VapShULhwpbLzVk6pizrA==]]></content>
+    <content type="text"><![CDATA[Please enter the password to read the blog. Incorrect Password! No content to display! U2FsdGVkX19tGeTBW1cfB3EboDmm5CBZHeZQ5RViR+MUoxD+ftRs7jamptFMDE0Wp1iRo6OF8ap6+2+dsjTGn6hzAa1VAQ5iPOwVlUqaCML/tSGSDAkr+n6C2pCUluUV2ZK5r6LCSaMEWQnMVbjIgMHblFxv9+953iuW7ZGTbzILCyIDOTq4X8lpWnM2VoPADVWYHcBQCvO51CSqWfA8MxgLQCYalLbtn02Y7sSMkNJIoPOuXIkk4d0QSZonnKbJY2KI6wANFQoZGw4qXDIhMctjWElHCLoet9/Apjg1b89EpspqO7MWDaOZs4gbtT1I/hcBhH6hbYAmEQ0j5bLwfwxIYWuk6OfER387f5Rj6ui/3ZbC99dClsN3tTGCpk4PcY3z4EL/rPFu1HhhXr9MAuyJBzxn68TCBpCfNr1XVbcAlVxGn4LQdec3nw4i6NOyvmhI1huxXluf0Myo4qigc9dzrzfjN0+8bNS3lbzQidhdVGICZknx69BxDTdd3TNFT9Bd8EKoFjukvKRwdoD/rMMNPT5ny+ULJFXanzpEl+3zG1NWKKTAJych2hSByKQnANvMgj0uvhqGq7ydSYpcwNaUTxCtyls5Et8kDx1OhW1mHv6l9N1uh1Q4In2ROYDQJdKXOaxDWcOHZFw6nvpqcs+qVupCFPcBcsIbqH1L/O2oibTkgYIWbM15icwYoAfxFsnasN5HCfsX6eommXzKsWIvhtLB8zI18zS3XKAW3VdfbAsPWTtlBRIWwDKs+UzJ4LCwd5yQpoyxkde8Ne+wtNV4RCnyvDfubjH1iwKh6tyBoZZruizQ8xGzPKxhYqs9WQTk3MT2OU4o4pra+bOR5QN4qmic6+3xKActm9/rVaNObhY+aPWH6gABERXGcs50nUheCtEvWki6yFxm52bRNXLuTJh5hqTmPqOHQ6hzoIV8Gh+TFJfMmJJAgCay1VycPLrrqjcKDQP/JESloCLIxORRbbpCQFjaWEvlNtqLOo8uGa6TEbF0Tu8dpdi3bt4zZR/vDtnL+0rq//N55TB/5wKwd7mBSkr1XhS5JkxmW+QLmzSAwH2mWysK1gWn6i0FSFMMZ+8becMpAMZyrw1iGGV/sGuRNzK9psbue0PR9yGhQteC9vfabwpcvMU5q94TqSGm3N/eFYN3XIS0CZCo08lgdp/n5IgmahHZyIzRtvA8Yo/Fmqt38GYzHUAoi1/+flz3LElBfRvhD8zWqs9/HUQVK56cUEyzI/4T+0zPg7sW2IENl7xBJZriGp5FpOPo0rUsXPXVtLk90UPT9oJKiHT2AEH+fVW4VnzueBsSr4VT0PG6IMKRAFU3PYn14S2eYdy8H97SWAEm6ixS7uwPAtMEHVUSW21HSSfkCc1j/6NgCRnlWAlfcJy08XA49m2QLsWCwZKB6Gs0W0M0A5O8kjWWMFiYpO+X1TNvWF5G0duEvkTtAcki0oESB6tl8+mAWDpvGt3QFfqzJHQfhyoTHPC4m4A7NAI+M1LF3X2X+qQBam2JDjEnpEJ5ETZzJbTmdtE0NblC4Uv8Xjj3lGnbkZW7QWAzdpH19Xhm4mGImGctn3DWrlZDW6UrXhB2mNAL3HVPIoSzod6F2qgIoI4TrvPtXST0uLV6CdcsHkhzeioqoHkB5ROZAdOkwuFKAq+2JgFvYg7Kgg8lolXOZt3qEg==]]></content>
       <categories>
         <category>sf</category>
       </categories>

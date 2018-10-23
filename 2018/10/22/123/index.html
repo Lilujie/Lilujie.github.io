@@ -98,7 +98,7 @@
 
 
 
-  <meta name="keywords" content="lilujie_test," />
+  <meta name="keywords" content="基本概念," />
 
 
 
@@ -109,15 +109,18 @@
 
 
 
-<meta name="keywords" content="lilujie_test">
+<meta name="description" content="定时器到了，执行定时器的handler function，这算处于中断上下文。 内核调度，调度的线程、进程，这算处于进程上下文。。。 内核中有一个中断线程化的概念，属于中断下半部的范畴，中断线程是可以被调度的，处于进程上下文。 在中断线程化机制合入Linux内核之前，中断下半部的三种旧实现机制（SoftIRQ、tasklet、workqueue）中的workqueue，就有了一些中断线程化的影子。">
+<meta name="keywords" content="基本概念">
 <meta property="og:type" content="article">
-<meta property="og:title" content="123">
+<meta property="og:title" content="上下文">
 <meta property="og:url" content="https://lilujie.github.io/2018/10/22/123/index.html">
 <meta property="og:site_name" content="打不死的小强">
+<meta property="og:description" content="定时器到了，执行定时器的handler function，这算处于中断上下文。 内核调度，调度的线程、进程，这算处于进程上下文。。。 内核中有一个中断线程化的概念，属于中断下半部的范畴，中断线程是可以被调度的，处于进程上下文。 在中断线程化机制合入Linux内核之前，中断下半部的三种旧实现机制（SoftIRQ、tasklet、workqueue）中的workqueue，就有了一些中断线程化的影子。">
 <meta property="og:locale" content="zh-Hans">
-<meta property="og:updated_time" content="2018-10-22T03:01:53.704Z">
+<meta property="og:updated_time" content="2018-10-23T01:51:40.121Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="123">
+<meta name="twitter:title" content="上下文">
+<meta name="twitter:description" content="定时器到了，执行定时器的handler function，这算处于中断上下文。 内核调度，调度的线程、进程，这算处于进程上下文。。。 内核中有一个中断线程化的概念，属于中断下半部的范畴，中断线程是可以被调度的，处于进程上下文。 在中断线程化机制合入Linux内核之前，中断下半部的三种旧实现机制（SoftIRQ、tasklet、workqueue）中的workqueue，就有了一些中断线程化的影子。">
 
 
 
@@ -153,7 +156,7 @@
 
 
 
-  <title>123 | 打不死的小强</title>
+  <title>上下文 | 打不死的小强</title>
   
 
 
@@ -352,7 +355,7 @@
 
         
         
-          <h1 class="post-title" itemprop="name headline">123</h1>
+          <h1 class="post-title" itemprop="name headline">上下文</h1>
         
 
         <div class="post-meta">
@@ -380,8 +383,8 @@
               
                 <span class="post-meta-item-text">更新于&#58;</span>
               
-              <time title="更新于" itemprop="dateModified" datetime="2018-10-22T11:01:53+08:00">
-                2018-10-22
+              <time title="更新于" itemprop="dateModified" datetime="2018-10-23T09:51:40+08:00">
+                2018-10-23
               </time>
             
           </span>
@@ -399,8 +402,8 @@
               
               
                 <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/123/" itemprop="url" rel="index">
-                    <span itemprop="name">123</span>
+                  <a href="/categories/内核/" itemprop="url" rel="index">
+                    <span itemprop="name">内核</span>
                   </a>
                 </span>
 
@@ -416,7 +419,7 @@
 
           
           
-             <span id="/2018/10/22/123/" class="leancloud_visitors" data-flag-title="123">
+             <span id="/2018/10/22/123/" class="leancloud_visitors" data-flag-title="上下文">
                <span class="post-meta-divider">|</span>
                <span class="post-meta-item-icon">
                  <i class="fa fa-eye"></i>
@@ -447,7 +450,12 @@
       
 
       
-        
+        <p>定时器到了，执行定时器的handler function，这算处于中断上下文。</p>
+<p>内核调度，调度的线程、进程，这算处于进程上下文。。。</p>
+<p>内核中有一个中断线程化的概念，属于中断下半部的范畴，中断线程是可以被调度的，处于进程上下文。</p>
+<p>在中断线程化机制合入Linux内核之前，中断下半部的三种旧实现机制（SoftIRQ、tasklet、workqueue）中的workqueue，就有了一些中断线程化的影子。workqueue的基本原理就是把需要推迟执行的工作，交由一个内核线程来执行，它是利用进程上下文来执行中断下半部的操作，因此workqueue允许重新调度和睡眠。</p>
+<p>在这里容易混淆中断上下文和中断上半部下半部的概念。中断上下文指的是中断发生时，CPU响应一个中断并执行中断服务程序时，内核处于中断上下文。中断服务程序处于中断上半部，然后一些耗时的操作会放在下半部执行。换句话说，一个完整的中断处理流程包含中断处理程序和中断下半部。我们经常说中断上下文中不能调用含有睡眠的函数，其实与中断上半段不能执行一些耗时操作的说法是一致的。</p>
+
       
     </div>
     
@@ -496,7 +504,7 @@
   </li>
   <li class="post-copyright-link">
     <strong>本文链接：</strong>
-    <a href="https://lilujie.github.io/2018/10/22/123/" title="123">https://lilujie.github.io/2018/10/22/123/</a>
+    <a href="https://lilujie.github.io/2018/10/22/123/" title="上下文">https://lilujie.github.io/2018/10/22/123/</a>
   </li>
   <li class="post-copyright-license">
     <strong>版权声明： </strong>
@@ -511,7 +519,7 @@
       
         <div class="post-tags">
           
-			<a href="/tags/lilujie-test/" rel="tag"><i class="fa fa-tag"></i> lilujie_test</a>
+			<a href="/tags/基本概念/" rel="tag"><i class="fa fa-tag"></i> 基本概念</a>
           
         </div>
       
