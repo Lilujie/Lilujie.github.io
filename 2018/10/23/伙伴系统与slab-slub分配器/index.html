@@ -98,7 +98,7 @@
 
 
 
-  <meta name="keywords" content="Hexo, NexT" />
+  <meta name="keywords" content="内存," />
 
 
 
@@ -109,13 +109,20 @@
 
 
 
-<meta property="og:type" content="website">
-<meta property="og:title" content="打不死的小强">
-<meta property="og:url" content="https://lilujie.github.io/tags/中断、进程/index.html">
+<meta name="description" content="&amp;emsp;&amp;emsp;内存管理有两个算法：伙伴算法和slab/slub算法。伙伴算法是以页为单位管理内存，slab算法是以字节为单位管理内存，是内核的小内存管理算法。slab分配器并没有脱离伙伴系统，而是基于伙伴系统分配的大内存进一步细分成小内存。先讲伙伴系统，再讲slab分配器。 &amp;emsp;&amp;emsp;伙伴系统是基于bootmem机制来分配一些数据结构的。bootmem初始化的时候会调用fr">
+<meta name="keywords" content="内存">
+<meta property="og:type" content="article">
+<meta property="og:title" content="伙伴系统与slab&#x2F;slub分配器">
+<meta property="og:url" content="https://lilujie.github.io/2018/10/23/伙伴系统与slab-slub分配器/index.html">
 <meta property="og:site_name" content="打不死的小强">
+<meta property="og:description" content="&amp;emsp;&amp;emsp;内存管理有两个算法：伙伴算法和slab/slub算法。伙伴算法是以页为单位管理内存，slab算法是以字节为单位管理内存，是内核的小内存管理算法。slab分配器并没有脱离伙伴系统，而是基于伙伴系统分配的大内存进一步细分成小内存。先讲伙伴系统，再讲slab分配器。 &amp;emsp;&amp;emsp;伙伴系统是基于bootmem机制来分配一些数据结构的。bootmem初始化的时候会调用fr">
 <meta property="og:locale" content="zh-Hans">
+<meta property="og:image" content="https://img-blog.csdn.net/20180730144539215?watermark/2/text/aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3UwMTEzMDY2NTk=/font/5a6L5L2T/fontsize/400/fill/I0JBQkFCMA==/dissolve/70">
+<meta property="og:updated_time" content="2018-10-23T07:19:07.428Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="打不死的小强">
+<meta name="twitter:title" content="伙伴系统与slab&#x2F;slub分配器">
+<meta name="twitter:description" content="&amp;emsp;&amp;emsp;内存管理有两个算法：伙伴算法和slab/slub算法。伙伴算法是以页为单位管理内存，slab算法是以字节为单位管理内存，是内核的小内存管理算法。slab分配器并没有脱离伙伴系统，而是基于伙伴系统分配的大内存进一步细分成小内存。先讲伙伴系统，再讲slab分配器。 &amp;emsp;&amp;emsp;伙伴系统是基于bootmem机制来分配一些数据结构的。bootmem初始化的时候会调用fr">
+<meta name="twitter:image" content="https://img-blog.csdn.net/20180730144539215?watermark/2/text/aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3UwMTEzMDY2NTk=/font/5a6L5L2T/fontsize/400/fill/I0JBQkFCMA==/dissolve/70">
 
 
 
@@ -145,13 +152,13 @@
 
 
 
-  <link rel="canonical" href="https://lilujie.github.io/tags/中断、进程/"/>
+  <link rel="canonical" href="https://lilujie.github.io/2018/10/23/伙伴系统与slab-slub分配器/"/>
 
 
 
 
 
-  <title>标签: 中断、进程 | 打不死的小强</title>
+  <title>伙伴系统与slab/slub分配器 | 打不死的小强</title>
   
 
 
@@ -171,7 +178,7 @@
     
   
 
-  <div class="container sidebar-position-left ">
+  <div class="container sidebar-position-left page-post-detail">
     <div class="headband"></div>
 
     <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
@@ -319,54 +326,280 @@
           <div id="content" class="content">
             
 
-  
-  
-  
-  <div class="post-block tag">
+  <div id="posts" class="posts-expand">
+    
 
-    <div id="posts" class="posts-collapse">
-      <div class="collection-title">
-        <h1>中断、进程<small>标签</small>
-        </h1>
-      </div>
+  
 
-      
-        
+  
+  
+  
 
   <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
-    <header class="post-header">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="https://lilujie.github.io/2018/10/23/伙伴系统与slab-slub分配器/">
 
-      <h2 class="post-title">
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="Ryan Tung">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/avatar.gif">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="打不死的小强">
+    </span>
+
+    
+      <header class="post-header">
+
         
-            <a class="post-title-link" href="/2018/10/22/123/" itemprop="url">
-              
-                <span itemprop="name">上下文理解</span>
-              
-            </a>
         
-      </h2>
+          <h1 class="post-title" itemprop="name headline">伙伴系统与slab/slub分配器</h1>
+        
 
-      <div class="post-meta">
-        <time class="post-time" itemprop="dateCreated"
-              datetime="2018-10-22T11:00:59+08:00"
-              content="2018-10-22" >
-          10-22
-        </time>
-      </div>
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2018-10-23T15:07:56+08:00">
+                2018-10-23
+              </time>
+            
 
-    </header>
-  </article>
+            
+              <span class="post-meta-divider">|</span>
+            
 
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-check-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">更新于&#58;</span>
+              
+              <time title="更新于" itemprop="dateModified" datetime="2018-10-23T15:19:07+08:00">
+                2018-10-23
+              </time>
+            
+          </span>
+
+          
+            <span class="post-category" >
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/内核/" itemprop="url" rel="index">
+                    <span itemprop="name">内核</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+          
+
+          
+          
+             <span id="/2018/10/23/伙伴系统与slab-slub分配器/" class="leancloud_visitors" data-flag-title="伙伴系统与slab/slub分配器">
+               <span class="post-meta-divider">|</span>
+               <span class="post-meta-item-icon">
+                 <i class="fa fa-eye"></i>
+               </span>
+               
+                 <span class="post-meta-item-text">阅读次数&#58;</span>
+               
+                 <span class="leancloud-visitors-count"></span>
+             </span>
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <p>&emsp;&emsp;内存管理有两个算法：伙伴算法和slab/slub算法。伙伴算法是以页为单位管理内存，slab算法是以字节为单位管理内存，是内核的小内存管理算法。slab分配器并没有脱离伙伴系统，而是基于伙伴系统分配的大内存进一步细分成小内存。先讲伙伴系统，再讲slab分配器。</p>
+<p>&emsp;&emsp;伙伴系统是基于bootmem机制来分配一些数据结构的。bootmem初始化的时候会调用free_area_init_node来对内存域zone数据结构进行初始化。zone包含一个frea_area的结构体来描述本ZONE的空闲页块链表，也会在bootmem初始化zone时被一并初始化。</p>
+<pre><code>    struct zone {
+ ...
+/* free areas of different sizes */
+struct free_area    free_area[MAX_ORDER];
+
+ ...
+ } ____cacheline_internodealigned_in_smp;
+</code></pre><p>&emsp;&emsp;注意struct free_area free_area[MAX_ORDER]是一个以链表为元素的数组，数组的每个元素都是某个阶数的空闲内存块的链表。</p>
+<p>&emsp;&emsp;MAX_ORDER（最大阶数）一般默认为11，代表有11个free_area，即有11组空闲页块的链表。</p>
+<p>例如free_area[0]：是一个链表，该链表里是长度为1的页块。即这个链表里有若干内存块，每个内存块都是1个page。</p>
+<p>free_area[10]：也是一个链表，该链表里是长度为1024的页块。即这个链表里有若干内存块，每个内存块都是1024个page（4M内存空间）。</p>
+<p>free_area的下标与该元素的链表中的内存块大小存在2的阶的关系。</p>
+<p><br></p>
+<p>&emsp;&emsp;那么什么是伙伴呢？如果同一个链表中的两个页块满足下面这三个条件，我们就称这两个页块为伙伴：</p>
+<p>&emsp;&emsp;1)  两个块的大小相同，假设为b。</p>
+<p>&emsp;&emsp;2)  两个块的物理地址连续。</p>
+<p>&emsp;&emsp;3) 伙伴中第一个块的起始物理地址是2<em>b</em>PAGE_SIZE的整数倍。即第0块和第1块是伙伴，第2块和第3块是伙伴，但是第1块和第2块不是伙伴。这样规定的目的是确保一对伙伴中的两个块可以合并成更高一级的大块。</p>
+<p>&emsp;&emsp;伙伴的关系有三种，（1）一个被分配时，那么另一个就等着这个分配出去的块被释放后合并，然后递归的进行更大order的合并；（2）如果两个都被分配，那么肯定有一个先被释放，那么化为情况一，注意在等待伙伴被释放的同时，该块可以被分配，从而情况一化为情况二，但是最终它们结果总是趋向于情况三，也就是都被释放从而被合并然后插入到更大一层的链表中。——有效防止内存碎片的产生。</p>
+<p><img src="https://img-blog.csdn.net/20180730144539215?watermark/2/text/aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3UwMTEzMDY2NTk=/font/5a6L5L2T/fontsize/400/fill/I0JBQkFCMA==/dissolve/70" alt="csdn博客上图片地址"></p>
+<p>&emsp;&emsp;如果链表的阶数为n，页块1的页号为page_id，其伙伴的页号查找公式为：</p>
+<p>$$<br>buddy_id = page_id ^ (1 &lt;&lt; n)<br>$$</p>
+<p><br><br>&emsp;&emsp;伙伴系统申请内核内存的接口有：alloc_pages，_ _get_free_pages等。</p>
+<p><br></p>
+<p>&emsp;&emsp;slub分配的原理可参考如下文章：<a href="https://blog.csdn.net/lukuen/article/details/6935068" target="_blank" rel="noopener">https://blog.csdn.net/lukuen/article/details/6935068</a></p>
+<p>&emsp;&emsp;我们在驱动开发的时候经常用到kmalloc函数，它就是基于slab分配器实现的。例如，我们分配一个17Bytes的内存，会这样调用：kmalloc(17, GFP_KERNEL)，系统会从名称“kmalloc-32”管理的slab缓存池中分配一个对象，即使浪费了剩余的15Byte。</p>
 
       
     </div>
+    
+    
+    
 
+    
+
+    
+      <div>
+        <div style="padding: 10px 0; margin: 20px auto; width: 90%; text-align: center;">
+  <div>我们从这个世界获取，也希望可以回报这个世界</div>
+  <button id="rewardButton" disable="enable" onclick="var qr = document.getElementById('QR'); if (qr.style.display === 'none') {qr.style.display='block';} else {qr.style.display='none'}">
+    <span>打赏</span>
+  </button>
+  <div id="QR" style="display: none;">
+
+    
+      <div id="wechat" style="display: inline-block">
+        <img id="wechat_qr" src="/images/s-wechatpay.png" alt="Ryan Tung 微信支付"/>
+        <p>微信支付</p>
+      </div>
+    
+
+    
+      <div id="alipay" style="display: inline-block">
+        <img id="alipay_qr" src="/images/s-alipay.png" alt="Ryan Tung 支付宝"/>
+        <p>支付宝</p>
+      </div>
+    
+
+    
+
+  </div>
+</div>
+
+      </div>
+    
+
+    
+      <div>
+        <ul class="post-copyright">
+  <li class="post-copyright-author">
+    <strong>本文作者：</strong>
+    Ryan Tung
+  </li>
+  <li class="post-copyright-link">
+    <strong>本文链接：</strong>
+    <a href="https://lilujie.github.io/2018/10/23/伙伴系统与slab-slub分配器/" title="伙伴系统与slab/slub分配器">https://lilujie.github.io/2018/10/23/伙伴系统与slab-slub分配器/</a>
+  </li>
+  <li class="post-copyright-license">
+    <strong>版权声明： </strong>
+    本博客所有文章除特别声明外，均采用 <a href="https://creativecommons.org/licenses/by-nc-sa/3.0/" rel="external nofollow" target="_blank">CC BY-NC-SA 3.0</a> 许可协议。转载请注明出处！
+  </li>
+</ul>
+
+      </div>
+    
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+			<a href="/tags/内存/" rel="tag"><i class="fa fa-tag"></i> 内存</a>
+          
+        </div>
+      
+
+      
+      
+        <div class="post-widgets">
+        
+
+        
+
+        
+          
+          <div id="needsharebutton-postbottom">
+            <span class="btn">
+              <i class="fa fa-share-alt" aria-hidden="true"></i>
+            </span>
+          </div>
+        
+        </div>
+      
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2018/10/22/123/" rel="next" title="上下文理解">
+                <i class="fa fa-chevron-left"></i> 上下文理解
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
   </div>
   
   
   
+  </article>
 
-  
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
 
 
           </div>
@@ -374,6 +607,15 @@
 
 
           
+
+  
+    <div class="comments" id="comments">
+      <div id="lv-container" data-id="city" data-uid="MTAyMC80MDQxMy8xNjk0MA=="></div>
+    </div>
+
+  
+
+
 
         </div>
         
@@ -611,6 +853,10 @@
 
 
   
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.4"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.1.4"></script>
+
+
 
   
 
@@ -639,6 +885,17 @@
 
 
 
+  
+    <script type="text/javascript">
+      (function(d, s) {
+        var j, e = d.getElementsByTagName(s)[0];
+        if (typeof LivereTower === 'function') { return; }
+        j = d.createElement(s);
+        j.src = 'https://cdn-city.livere.com/js/embed.dist.js';
+        j.async = true;
+        e.parentNode.insertBefore(j, e);
+      })(document, 'script');
+    </script>
   
 
 
@@ -1117,26 +1374,6 @@
   
 
   
-  
-    <script type="text/x-mathjax-config">
-      MathJax.Hub.Config({
-        tex2jax: {
-          inlineMath: [ ['$','$'], ["\\(","\\)"]  ],
-          processEscapes: true,
-          skipTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code']
-        }
-      });
-    </script>
-
-    <script type="text/x-mathjax-config">
-      MathJax.Hub.Queue(function() {
-        var all = MathJax.Hub.getAllJax(), i;
-        for (i=0; i < all.length; i += 1) {
-          all[i].SourceElement().parentNode.className += ' has-jax';
-        }
-      });
-    </script>
-    <script type="text/javascript" src="//cdn.bootcss.com/mathjax/2.7.1/latest.js?config=TeX-AMS-MML_HTMLorMML"></script>
   
 
 

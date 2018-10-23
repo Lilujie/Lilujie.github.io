@@ -109,18 +109,18 @@
 
 
 
-<meta name="description" content="举例：　　定时器到了，执行定时器的handler function，这算处于中断上下文。 　　内核调度，调度的线程、进程，这算处于进程上下文。。。  中断线程化：　　内核中有一个中断线程化的概念，属于中断下半部的范畴，中断线程是可以被调度的，处于进程上下文。 workqueue　　在中断线程化机制合入Linux内核之前，中断下半部的三种旧实现机制（SoftIRQ、tasklet、workqueu">
+<meta name="description" content="举例：　　定时器到了，执行定时器的handler function，这算处于中断上下文。　　内核调度，调度的线程、进程，这算处于进程上下文。。。  中断线程化：　　内核中有一个中断线程化的概念，属于中断下半部的范畴，中断线程是可以被调度的，处于进程上下文。 workqueue　　在中断线程化机制合入Linux内核之前，中断下半部的三种旧实现机制（SoftIRQ、tasklet、workqueue">
 <meta name="keywords" content="中断、进程">
 <meta property="og:type" content="article">
 <meta property="og:title" content="上下文理解">
 <meta property="og:url" content="https://lilujie.github.io/2018/10/22/123/index.html">
 <meta property="og:site_name" content="打不死的小强">
-<meta property="og:description" content="举例：　　定时器到了，执行定时器的handler function，这算处于中断上下文。 　　内核调度，调度的线程、进程，这算处于进程上下文。。。  中断线程化：　　内核中有一个中断线程化的概念，属于中断下半部的范畴，中断线程是可以被调度的，处于进程上下文。 workqueue　　在中断线程化机制合入Linux内核之前，中断下半部的三种旧实现机制（SoftIRQ、tasklet、workqueu">
+<meta property="og:description" content="举例：　　定时器到了，执行定时器的handler function，这算处于中断上下文。　　内核调度，调度的线程、进程，这算处于进程上下文。。。  中断线程化：　　内核中有一个中断线程化的概念，属于中断下半部的范畴，中断线程是可以被调度的，处于进程上下文。 workqueue　　在中断线程化机制合入Linux内核之前，中断下半部的三种旧实现机制（SoftIRQ、tasklet、workqueue">
 <meta property="og:locale" content="zh-Hans">
-<meta property="og:updated_time" content="2018-10-23T06:59:40.196Z">
+<meta property="og:updated_time" content="2018-10-23T07:05:21.412Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="上下文理解">
-<meta name="twitter:description" content="举例：　　定时器到了，执行定时器的handler function，这算处于中断上下文。 　　内核调度，调度的线程、进程，这算处于进程上下文。。。  中断线程化：　　内核中有一个中断线程化的概念，属于中断下半部的范畴，中断线程是可以被调度的，处于进程上下文。 workqueue　　在中断线程化机制合入Linux内核之前，中断下半部的三种旧实现机制（SoftIRQ、tasklet、workqueu">
+<meta name="twitter:description" content="举例：　　定时器到了，执行定时器的handler function，这算处于中断上下文。　　内核调度，调度的线程、进程，这算处于进程上下文。。。  中断线程化：　　内核中有一个中断线程化的概念，属于中断下半部的范畴，中断线程是可以被调度的，处于进程上下文。 workqueue　　在中断线程化机制合入Linux内核之前，中断下半部的三种旧实现机制（SoftIRQ、tasklet、workqueue">
 
 
 
@@ -383,7 +383,7 @@
               
                 <span class="post-meta-item-text">更新于&#58;</span>
               
-              <time title="更新于" itemprop="dateModified" datetime="2018-10-23T14:59:40+08:00">
+              <time title="更新于" itemprop="dateModified" datetime="2018-10-23T15:05:21+08:00">
                 2018-10-23
               </time>
             
@@ -451,8 +451,7 @@
 
       
         <hr>
-<h1 id="举例："><a href="#举例：" class="headerlink" title="举例："></a>举例：</h1><p>　　定时器到了，执行定时器的handler function，这算处于中断上下文。</p>
-<p>　　内核调度，调度的线程、进程，这算处于进程上下文。。。</p>
+<h1 id="举例："><a href="#举例：" class="headerlink" title="举例："></a>举例：</h1><p>　　定时器到了，执行定时器的handler function，这算处于中断上下文。<br>　　内核调度，调度的线程、进程，这算处于进程上下文。。。</p>
 <hr>
 <h1 id="中断线程化："><a href="#中断线程化：" class="headerlink" title="中断线程化："></a>中断线程化：</h1><p>　　内核中有一个中断线程化的概念，属于中断下半部的范畴，中断线程是可以被调度的，处于进程上下文。</p>
 <h1 id="workqueue"><a href="#workqueue" class="headerlink" title="workqueue"></a>workqueue</h1><p>　　在中断线程化机制合入Linux内核之前，中断下半部的三种旧实现机制（SoftIRQ、tasklet、workqueue）中的workqueue，就有了一些中断线程化的影子。<strong>workqueue的基本原理就是把需要推迟执行的工作，交由一个内核线程来执行，</strong>它是利用进程上下文来执行中断下半部的操作，因此workqueue允许重新调度和睡眠。</p>
@@ -560,6 +559,10 @@
 
           <div class="post-nav-prev post-nav-item">
             
+              <a href="/2018/10/23/伙伴系统与slab-slub分配器/" rel="prev" title="伙伴系统与slab/slub分配器">
+                伙伴系统与slab/slub分配器 <i class="fa fa-chevron-right"></i>
+              </a>
+            
           </div>
         </div>
       
@@ -644,7 +647,7 @@
               
                 <a href="/archives/">
               
-                  <span class="site-state-item-count">4</span>
+                  <span class="site-state-item-count">5</span>
                   <span class="site-state-item-name">日志</span>
                 </a>
               </div>
