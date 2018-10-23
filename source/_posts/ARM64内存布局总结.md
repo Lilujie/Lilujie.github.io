@@ -19,7 +19,7 @@ _ _ _
 
 　　pg_data_t *pgdat是描述node的数据结构，UMA结构只有一个node。pg_data_t *pgda等价于struct pglist_data *pgdat。一个node又包含多个内存管理区域，如ZONE_NORMAL，ZONE_DMA等：
 
-![node](https://img-blog.csdn.net/20180729132128289?watermark/2/text/aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3UwMTEzMDY2NTk=/font/5a6L5L2T/fontsize/400/fill/I0JBQkFCMA==/dissolve/70)
+![node](./ARM64内存布局总结/ARM64内存布局总结.png)
 
 ## （2）create_page_table完成了3种地址映射的页表空间填写：
 
